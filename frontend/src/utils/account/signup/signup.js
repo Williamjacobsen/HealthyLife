@@ -29,6 +29,10 @@ function Signup() {
     });
   };
 
+  const createCaloriesApi = () => {
+    return 0;
+  }
+
   const showSignupPageState = () => {
     if (signupPage === 0) {
       return (
@@ -236,6 +240,7 @@ function Signup() {
                 />
               </div>
             </div>
+            <button className="signup-btn-confirm">Sign Up</button>
           </div>
         </>
       );

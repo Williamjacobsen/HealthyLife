@@ -258,3 +258,18 @@ label {
 .Dropdown-origin:hover ~ .dropdown-icon {
   transform: rotate(180deg);
 }
+
+.signup-btn-confirm {
+  position: fixed;
+  right: 46.5%;
+  bottom: 17.5%;
+  padding: 20px;
+  font-size: 24px;
+  background-color: #fff;
+  border-radius: 20px;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.signup-btn-confirm:hover {
+  background-color: #c6e377;
+}
