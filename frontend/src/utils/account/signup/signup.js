@@ -13,7 +13,7 @@ function Signup() {
   const [age, setAge] = useState(0);
   const [height, setHeight] = useState(0);
   const [weight, setWeight] = useState(0);
-  const [gender, setGender] = useState("Male");
+  const [gender, setGender] = useState("m");
   const [activity, setActivity] = useState("Activity level...");
 
   const [signupPage, setSignupPage] = useState(0);
@@ -31,7 +31,7 @@ function Signup() {
 
   const createCaloriesApi = () => {
     return 0;
-  }
+  };
 
   const showSignupPageState = () => {
     if (signupPage === 0) {
@@ -113,7 +113,7 @@ function Signup() {
             <div className="signup-option-two">
               <label>Gender</label>
               {(() => {
-                if (gender === "Male") {
+                if (gender === "m") {
                   return (
                     <>
                       <div
@@ -127,7 +127,7 @@ function Signup() {
                         <p className="Gender-Paragraf-male">Male</p>
                         <div
                           onClick={() => {
-                            setGender("Female");
+                            setGender("f");
                           }}
                           className="Gender-Paragraf-male-box"
                         ></div>
@@ -154,7 +154,7 @@ function Signup() {
                         <p className="Gender-Paragraf-male">Male</p>
                         <div
                           onClick={() => {
-                            setGender("Male");
+                            setGender("m");
                           }}
                           className="Gender-Paragraf-female-box"
                         ></div>
@@ -240,7 +240,32 @@ function Signup() {
                 />
               </div>
             </div>
-            <button className="signup-btn-confirm">Sign Up</button>
+            <button
+              onClick={() => {
+                Axios.post("http://localhost:5000/getCalories", {
+                  age: age,
+                  gender: gender,
+                  height: height,
+                  weight: weight,
+                  activity: activity,
+                }).then((res) => {
+                  const calories = res.data.calorie;
+                  if (
+                    calories === 0 ||
+                    calories === "" ||
+                    calories === null ||
+                    calories === undefined
+                  ) {
+                    throw new Error("Calories are not vaild...");
+                  } else {
+                    console.log("Calories: " + calories);
+                  }
+                });
+              }}
+              className="signup-btn-confirm"
+            >
+              Sign Up
+            </button>
           </div>
         </>
       );
