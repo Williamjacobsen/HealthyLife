@@ -242,7 +242,9 @@ function Signup() {
             </div>
             <button
               onClick={() => {
-                Axios.post("http://localhost:5000/getCalories", {
+                Axios.post("http://localhost:5000/SignUp", {
+                  username: FirstnameSignUp + " " + LastnameSignUp,
+                  password: passwordSignUp,
                   age: age,
                   gender: gender,
                   height: height,
