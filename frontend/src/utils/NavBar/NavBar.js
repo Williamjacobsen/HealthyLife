@@ -17,7 +17,11 @@ function NavBar(props) {
   });
 
   const handleLoginBtnSwitch = () => {
-    props.onChange(true);
+    props.login(true);
+  };
+
+  const handleSignupBtnSwitch = () => {
+    props.signup(true);
   };
 
   return (
@@ -43,9 +47,13 @@ function NavBar(props) {
           <div className="btn-background-acc"></div>
           <div className="btn-background-acc-linebreak"></div>
           {isDesktop ? (
-            <h4 className="sign-up-btn">Get Started For Free</h4>
+            <h4 className="sign-up-btn" onClick={handleSignupBtnSwitch}>
+              Get Started For Free
+            </h4>
           ) : (
-            <h4 className="sign-up-btn">Sign Up</h4>
+            <h4 className="sign-up-btn" onClick={handleSignupBtnSwitch}>
+              Sign Up
+            </h4>
           )}
           <h4 className="login-btn" onClick={handleLoginBtnSwitch}>
             Login
