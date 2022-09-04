@@ -84,6 +84,10 @@ app.post("/SignUp", async (req, res) => {
     activity
   );
 
+  if (!calories) {
+    res.send({ msg: "Calorie error..." });
+  }
+
   // create new account (username, password, calories)
   bcrypt.hash(req.body.password, saltRounds, (err, hashedPwd) => {
     if (err) {
@@ -96,6 +100,10 @@ app.post("/SignUp", async (req, res) => {
       (err, result) => {
         if (err) {
           console.log(err);
+          res.send({ msg: "An error occurred" });
+        } else {
+          console.log("Succesfully created account...");
+          res.send({ calorie: calories });
         }
       }
     );
