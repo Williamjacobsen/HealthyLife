@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
-const { tableauSignin } = require("./utils/getCalorieAPI");
+const { getCalorieData } = require("./utils/getCalorieAPI");
 
 const saltRounds = 10; // the time used to encrypt
 
@@ -41,20 +41,62 @@ const db = mysql.createConnection({
   database: "healthylife",
 });
 
-app.post("/SignUp", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+app.post("/SignUp", async (req, res) => {
+  /*
+  cage = age = int (1, 2, 3)
+  csex = gender = m (male) / f (female)
+  cheightmeter = height = int (1, 2, 3)
+  ckg = weight = int (1, 2, 3)
+  cactivity = activity = float (1.234, 2.345, 3.456) => {
+      Sedentary = 1.2
+      Light = 1.375
+      Moderate = 1.465
+      Active = 1.55
+      Very Active = 1.725
+      Extra Active = 1.9
+  }
+  */
+  let activity = 0.0;
+  if (req.body.activity === "Sedentary: little or no exercise") {
+    activity = 1.2;
+  } else if (req.body.activity === "Light: exercise 1-3 times/week") {
+    activity = 1.375;
+  } else if (
+    req.body.activity ===
+    "Active: daily exercise or intense exercise 3-4 times/week"
+  ) {
+    activity = 1.55;
+  } else if (
+    req.body.activity === "Very Active: intense exercise 6-7 times/week"
+  ) {
+    activity = 1.725;
+  } else if (
+    req.body.activity ===
+    "Extra Active: very intense exercise daily, or physical job"
+  ) {
+    activity = 1.9;
+  }
+  const calories = await getCalorieData(
+    req.body.age,
+    req.body.gender,
+    req.body.height,
+    req.body.weight,
+    activity
+  );
 
-  bcrypt.hash(password, saltRounds, (err, hash) => {
+  // create new account (username, password, calories)
+  bcrypt.hash(req.body.password, saltRounds, (err, hashedPwd) => {
     if (err) {
       console.log(err);
     }
 
     db.query(
-      "INSERT INTO accounts (username, password) VALUES (?,?)",
-      [username, hash],
+      "INSERT INTO accounts (username, password, calories) VALUES (?,?,?)",
+      [req.body.username, hashedPwd, calories],
       (err, result) => {
-        console.log(err);
+        if (err) {
+          console.log(err);
+        }
       }
     );
   });
@@ -98,43 +140,6 @@ app.post("/Login", (req, res) => {
       }
     }
   );
-});
-
-app.post("/getCalories", async (req, res) => {
-  /*
-  cage = age = int (1, 2, 3)
-  csex = gender = m (male) / f (female)
-  cheightmeter = height = int (1, 2, 3)
-  ckg = weight = int (1, 2, 3)
-  cactivity = activity = float (1.234, 2.345, 3.456) => {
-      Sedentary = 1.2
-      Light = 1.375
-      Moderate = 1.465
-      Active = 1.55
-      Very Active = 1.725
-      Extra Active = 1.9
-  }
-  */
-  let activity = 0.00;
-  if (req.body.activity === "Sedentary: little or no exercise") {
-    activity = 1.2;
-  } else if (req.body.activity === "Light: exercise 1-3 times/week") {
-    activity = 1.375;
-  } else if (req.body.activity === "Active: daily exercise or intense exercise 3-4 times/week") {
-    activity = 1.55;
-  } else if (req.body.activity === "Very Active: intense exercise 6-7 times/week") {
-    activity = 1.725;
-  } else if (req.body.activity === "Extra Active: very intense exercise daily, or physical job") {
-    activity = 1.9;
-  }
-  const calories = await tableauSignin(
-    req.body.age,
-    req.body.gender,
-    req.body.height,
-    req.body.weight,
-    activity
-  );
-  res.send({ calorie: calories });
 });
 
 app.listen(5000, () => console.log(`Server listening on port 5000...`));
