@@ -14,13 +14,13 @@ function StartingPage() {
   };
 
   const handleSignupBtnSwitch = (signupBtnSwitch) => {
-    setSignupBtn(true);
+    setSignupBtn(signupBtnSwitch);
   };
 
   return (
     <div className="staringPage-container">
       <div>
-        <NavBar onChange={handleLoginBtnSwitch} />
+        <NavBar login={handleLoginBtnSwitch} signup={handleSignupBtnSwitch} />
         {loginBtn ? <LoginPage /> : null}
         {signupBtn ? <SignupPage /> : null}
       </div>
