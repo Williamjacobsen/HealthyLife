@@ -29,10 +29,6 @@ function Signup() {
     });
   };
 
-  const createCaloriesApi = () => {
-    return 0;
-  };
-
   const showSignupPageState = () => {
     if (signupPage === 0) {
       return (
@@ -252,16 +248,8 @@ function Signup() {
                   activity: activity,
                 }).then((res) => {
                   const calories = res.data.calorie;
-                  if (
-                    calories === 0 ||
-                    calories === "" ||
-                    calories === null ||
-                    calories === undefined
-                  ) {
-                    throw new Error("Calories are not vaild...");
-                  } else {
-                    console.log("Calories: " + calories);
-                  }
+                  console.log("Calories: " + calories);
+                  console.log(res);
                 });
               }}
               className="signup-btn-confirm"
