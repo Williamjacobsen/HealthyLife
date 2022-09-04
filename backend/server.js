@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const bcrypt = require("bcrypt");
+const { tableauSignin } = require("./utils/getCalorieAPI");
 
 const saltRounds = 10; // the time used to encrypt
 
@@ -97,6 +98,16 @@ app.post("/Login", (req, res) => {
       }
     }
   );
+});
+
+app.get("/getCalories", async (req, res) => {
+  const age = 25;
+  const gender = "m";
+  const height = 180;
+  const weight = 65;
+  const activity = 1.465;
+  const calories = await tableauSignin(age, gender, height, weight, activity);
+  res.send({ calorie: calories });
 });
 
 app.listen(5000, () => console.log(`Server listening on port 5000...`));
