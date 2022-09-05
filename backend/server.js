@@ -102,7 +102,9 @@ app.post("/SignUp", async (req, res) => {
           console.log(err);
           res.send({ msg: "An error occurred" });
         } else {
-          console.log("Succesfully created account...");
+          console.log(
+            `Succesfully created account - USERNAME : ${req.body.username}...`
+          );
           res.send({ calorie: calories });
         }
       }
