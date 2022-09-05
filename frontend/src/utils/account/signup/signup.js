@@ -20,14 +20,7 @@ function Signup() {
 
   const [showDropdown, setShowDropdown] = useState(false);
 
-  const SignUp = () => {
-    Axios.post("http://localhost:5000/SignUp", {
-      username: FirstnameSignUp + " " + LastnameSignUp,
-      password: passwordSignUp,
-    }).then((res) => {
-      console.log(res);
-    });
-  };
+  const [loginStatus, setLoginStatus] = useState("");
 
   const showSignupPageState = () => {
     if (signupPage === 0) {
@@ -246,11 +239,28 @@ function Signup() {
                   height: height,
                   weight: weight,
                   activity: activity,
-                }).then((res) => {
-                  const calories = res.data.calorie;
-                  console.log("Calories: " + calories);
-                  console.log(res);
-                });
+                })
+                  .then((res) => {
+                    const calories = res.data.calorie;
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  })
+                  .then(() => {
+                    Axios.post("http://localhost:5000/Login", {
+                      username: FirstnameSignUp + " " + LastnameSignUp,
+                      password: passwordSignUp,
+                    }).then((res) => {
+                      if (res.data.message) {
+                        setLoginStatus(res.data.message);
+                      } else {
+                        setLoginStatus(res.data[0].username);
+                      }
+                    });
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
               }}
               className="signup-btn-confirm"
             >
