@@ -31,6 +31,10 @@
   font-size: 50px;
 }
 
+label {
+  font-size: 24px;
+}
+
 input {
   font-size: 20px;
   border-radius: 10px;
@@ -43,7 +47,7 @@ input {
   width: 400px;
 }
 
-.login-btn-confirm {
+#login-title{
   position: relative;
-  top: 300px;
+  left: 37%;
 }

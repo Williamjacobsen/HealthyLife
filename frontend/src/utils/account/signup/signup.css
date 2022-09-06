@@ -260,8 +260,9 @@ label {
 }
 
 .signup-btn-confirm {
+  z-index: 0;
   position: fixed;
-  right: 46.5%;
+  right: 48%;
   bottom: 17.5%;
   padding: 20px;
   font-size: 24px;

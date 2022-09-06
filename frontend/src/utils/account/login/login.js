@@ -2,53 +2,71 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
-  const [usernameLogIn, setUsernameLogIn] = useState("");
+  /* eslint-disable */
+  const [firstnameLogIn, setFirstnameLogIn] = useState("");
+  const [lastnameLogIn, setLastnameLogIn] = useState("");
   const [passwordLogIn, setPasswordLogIn] = useState("");
 
-  const [loginStatus, setLoginStatus] = useState("");
-
+  let navigate = useNavigate();
   const LogIn = () => {
     Axios.post("http://localhost:5000/Login", {
-      username: usernameLogIn,
+      username: firstnameLogIn + " " + lastnameLogIn,
       password: passwordLogIn,
     }).then((res) => {
-      console.log(res);
 
-      if (res.data.message) {
-        setLoginStatus(res.data.message);
+      if (res.data[0].username) {
+        navigate("/home");
       } else {
-        setLoginStatus(res.data[0].username);
+        console.log("Something went wrong, please try again...");
+        navigate("/");
       }
     });
   };
 
   return (
-    <div className="login-container">
-      <div className="login-wrapper">
-        <h4 className="login-title">Login</h4>
-        <input
-          type="text"
-          placeholder="Username..."
-          onChange={(e) => {
-            setUsernameLogIn(e.target.value);
-          }}
-        />
-        <br />
-        <input
-          type="text"
-          placeholder="Password..."
-          onChange={(e) => {
-            setPasswordLogIn(e.target.value);
-          }}
-        />
-        <br />
-        <button onClick={LogIn} className="login-btn-confirm">
-          Login
-        </button>
+    <div className="signup-background">
+      <div className="signup-container">
+        <div className="signup-wrapper">
+          <h4 className="signup-title" id="login-title">
+            Login
+          </h4>
+          <div className="signup-title-underline"></div>
+          <br />
+          <label>Firstname</label>
+          <input
+            type="text"
+            placeholder="Firstname..."
+            onChange={(e) => {
+              setFirstnameLogIn(e.target.value);
+            }}
+          />
+          <label>Lastname</label>
+          <input
+            type="text"
+            placeholder="Lastname..."
+            onChange={(e) => {
+              setLastnameLogIn(e.target.value);
+            }}
+          />
+          <br />
+          <label>Password</label>
+          <input
+            type="text"
+            placeholder="Password..."
+            onChange={(e) => {
+              setPasswordLogIn(e.target.value);
+            }}
+          />
+          <br />
+          <button onClick={LogIn} className="signup-btn-confirm">
+            Login
+          </button>
+        </div>
+        <div className="login-curves"></div>
       </div>
-      <div className="login-curves"></div>
     </div>
   );
 }
