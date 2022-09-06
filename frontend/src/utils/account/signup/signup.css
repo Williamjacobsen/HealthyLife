@@ -274,3 +274,39 @@ label {
 .signup-btn-confirm:hover {
   background-color: #c6e377;
 }
+
+.close-btn-signup {
+  position: fixed;
+  top: 25%;
+  right: 20%;
+  padding: 25px;
+}
+
+.close-btn-signup-line-one,
+.close-btn-signup-line-two {
+  transition: transform 0.3s ease-in-out;
+  border-radius: 20px;
+  height: 7.5px;
+  width: 75px;
+  background-color: #729d39;
+}
+
+.close-btn-signup-line-one {
+  transform: rotate(45deg);
+}
+
+.close-btn-signup-line-two {
+  transform: rotate(135deg);
+  position: fixed;
+  top: 27.5%;
+  right: 21.25%;
+}
+
+.close-btn-signup:hover .close-btn-signup-line-one {
+  transform: rotate(0deg);
+}
+
+.close-btn-signup:hover .close-btn-signup-line-two {
+  transform: rotate(180deg);
+}
+

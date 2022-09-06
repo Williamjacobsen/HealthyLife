@@ -16,7 +16,6 @@ function Login(props) {
       username: firstnameLogIn + " " + lastnameLogIn,
       password: passwordLogIn,
     }).then((res) => {
-
       if (res.data[0].username) {
         navigate("/home");
       } else {
@@ -66,6 +65,15 @@ function Login(props) {
           </button>
         </div>
         <div className="login-curves"></div>
+      </div>
+      <div
+        className="close-btn-signup"
+        onClick={() => {
+          props.showForm(false);
+        }}
+      >
+        <div className="close-btn-signup-line-one"></div>
+        <div className="close-btn-signup-line-two"></div>
       </div>
     </div>
   );

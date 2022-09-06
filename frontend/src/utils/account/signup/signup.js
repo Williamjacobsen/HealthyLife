@@ -3,7 +3,7 @@ import { useState } from "react";
 import Axios from "axios";
 import "./signup.css";
 
-function Signup() {
+function Signup(props) {
   /* eslint-disable */
 
   const [FirstnameSignUp, setFirstnameSignUp] = useState("");
@@ -279,6 +279,15 @@ function Signup() {
           <h4 className="signup-title">Create New Account</h4>
           <div className="signup-title-underline"></div>
           {showSignupPageState()}
+          <div
+            className="close-btn-signup"
+            onClick={() => {
+              props.showForm(false);
+            }}
+          >
+            <div className="close-btn-signup-line-one"></div>
+            <div className="close-btn-signup-line-two"></div>
+          </div>
         </div>
       </div>
     </div>
