@@ -20,7 +20,7 @@ function StartingPage() {
   return (
     <div className="staringPage-container">
       <div>
-        <NavBar login={handleLoginBtnSwitch} signup={handleSignupBtnSwitch} />
+        <NavBar pulledFrom={"startingPage"} login={handleLoginBtnSwitch} signup={handleSignupBtnSwitch} />
         {loginBtn ? <LoginPage /> : null}
         {signupBtn ? <SignupPage /> : null}
       </div>

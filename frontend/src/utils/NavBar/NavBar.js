@@ -42,7 +42,7 @@ function NavBar(props) {
           </div>
         ) : null}
       </div>
-      {!props.pulledFrom ? (
+      {props.pulledFrom === "startingPage" ? (
         <div className="navbar-options-warpper">
           <div className="btn-background-acc"></div>
           <div className="btn-background-acc-linebreak"></div>
@@ -59,10 +59,14 @@ function NavBar(props) {
             Login
           </h4>
         </div>
+      ) : props.pulledFrom === "home" ? (
+        <div className="navbar-options-warpper">
+          <div className="btn-background-acc"></div>
+          <div className="btn-background-acc-linebreak"></div>
+        </div>
       ) : (
         <div className="navbar-options-warpper">
           <div className="btn-background-navbar"></div>
-          <div className="btn-background-acc-linebreak"></div>
         </div>
       )}
     </div>
