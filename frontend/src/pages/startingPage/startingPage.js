@@ -25,8 +25,15 @@ function StartingPage() {
           login={handleLoginBtnSwitch}
           signup={handleSignupBtnSwitch}
         />
-        {loginBtn ? <LoginPage showForm={handleLoginBtnSwitch} /> : null}
-        {signupBtn ? <SignupPage showForm={handleSignupBtnSwitch} /> : null}
+        {loginBtn ? (
+          <LoginPage showForm={handleLoginBtnSwitch} showOther={setSignupBtn} />
+        ) : null}
+        {signupBtn ? (
+          <SignupPage
+            showForm={handleSignupBtnSwitch}
+            showOther={setLoginBtn}
+          />
+        ) : null}
       </div>
       <div>
         <img

@@ -129,6 +129,15 @@ function Signup(props) {
               setPasswordSignUp(e.target.value);
             }}
           />
+          <h4
+            className="signup-login-other-option"
+            onClick={() => {
+              props.showOther(true);
+              props.showForm(false);
+            }}
+          >
+            Already have an account?
+          </h4>
           <div
             onClick={() => {
               if (
