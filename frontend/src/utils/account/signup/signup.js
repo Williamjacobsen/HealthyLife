@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import "./signup.css";
 
@@ -22,6 +22,85 @@ function Signup(props) {
 
   const [loginStatus, setLoginStatus] = useState("");
 
+  const handleSignup = () => {
+    Axios.post("http://localhost:5000/SignUp", {
+      username: FirstnameSignUp + " " + LastnameSignUp,
+      password: passwordSignUp,
+      age: age,
+      gender: gender,
+      height: height,
+      weight: weight,
+      activity: activity,
+    })
+      .then((res) => {
+        const calories = res.data.calorie;
+        console.log("Succesfully created account...");
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(() => {
+        Axios.post("http://localhost:5000/Login", {
+          username: FirstnameSignUp + " " + LastnameSignUp,
+          password: passwordSignUp,
+        }).then((res) => {
+          if (res.data[0].username) {
+            navigate("/home");
+          } else {
+            console.log("Something went wrong, please try again...");
+            window.location.reload(false);
+          }
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (
+          signupPage == 0 &&
+          FirstnameSignUp != "" &&
+          LastnameSignUp != "" &&
+          passwordSignUp != ""
+        ) {
+          setSignupPage(1);
+        } else if (
+          signupPage == 1 &&
+          FirstnameSignUp != "" &&
+          LastnameSignUp != "" &&
+          passwordSignUp != "" &&
+          age >= 15 &&
+          age <= 80 &&
+          height != 0 &&
+          weight != 0 &&
+          activity != "Activity level..."
+        ) {
+          handleSignup();
+        } else {
+          console.log("Something went wrong, please try again...");
+          window.location.reload(false);
+        }
+      }
+    };
+    document.addEventListener("keydown", keyDownHandler);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [
+    FirstnameSignUp,
+    LastnameSignUp,
+    passwordSignUp,
+    age,
+    gender,
+    height,
+    weight,
+    activity,
+  ]);
+
   const showSignupPageState = () => {
     if (signupPage === 0) {
       return (
@@ -42,6 +121,7 @@ function Signup(props) {
               setLastnameSignUp(e.target.value);
             }}
           />
+          <br />
           <label>Password</label>
           <input
             type="password"
@@ -231,36 +311,19 @@ function Signup(props) {
             </div>
             <button
               onClick={() => {
-                Axios.post("http://localhost:5000/SignUp", {
-                  username: FirstnameSignUp + " " + LastnameSignUp,
-                  password: passwordSignUp,
-                  age: age,
-                  gender: gender,
-                  height: height,
-                  weight: weight,
-                  activity: activity,
-                })
-                  .then((res) => {
-                    const calories = res.data.calorie;
-                  })
-                  .catch((err) => {
-                    console.error(err);
-                  })
-                  .then(() => {
-                    Axios.post("http://localhost:5000/Login", {
-                      username: FirstnameSignUp + " " + LastnameSignUp,
-                      password: passwordSignUp,
-                    }).then((res) => {
-                      if (res.data.message) {
-                        setLoginStatus(res.data.message);
-                      } else {
-                        setLoginStatus(res.data[0].username);
-                      }
-                    });
-                  })
-                  .catch((err) => {
-                    console.error(err);
-                  });
+                if (
+                  signupPage == 1 &&
+                  FirstnameSignUp != "" &&
+                  LastnameSignUp != "" &&
+                  passwordSignUp != "" &&
+                  age >= 15 &&
+                  age <= 80 &&
+                  height != 0 &&
+                  weight != 0 &&
+                  activity != "Activity level..."
+                ) {
+                  handleSignup();
+                }
               }}
               className="signup-btn-confirm"
             >
