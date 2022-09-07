@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import "./signup.css";
 
@@ -57,6 +58,7 @@ function Signup(props) {
       });
   };
 
+  let navigate = useNavigate();
   useEffect(() => {
     const keyDownHandler = (event) => {
       if (event.key === "Enter") {
@@ -70,9 +72,6 @@ function Signup(props) {
           setSignupPage(1);
         } else if (
           signupPage == 1 &&
-          FirstnameSignUp != "" &&
-          LastnameSignUp != "" &&
-          passwordSignUp != "" &&
           age >= 15 &&
           age <= 80 &&
           height != 0 &&
