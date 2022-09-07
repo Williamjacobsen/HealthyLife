@@ -15,14 +15,16 @@ function Login(props) {
     Axios.post("http://localhost:5000/Login", {
       username: firstnameLogIn + " " + lastnameLogIn,
       password: passwordLogIn,
-    }).then((res) => {
-      if (res.data[0].username) {
-        navigate("/home");
-      } else {
+    })
+      .then((res) => {
+        if (res.data[0].username) {
+          navigate("/home");
+        }
+      })
+      .catch((err) => {
         console.log("Something went wrong, please try again...");
-        navigate("/");
-      }
-    });
+        window.location.reload(false);
+      });
   };
 
   return (
@@ -53,7 +55,7 @@ function Login(props) {
           <br />
           <label>Password</label>
           <input
-            type="text"
+            type="password"
             placeholder="Password..."
             onChange={(e) => {
               setPasswordLogIn(e.target.value);
