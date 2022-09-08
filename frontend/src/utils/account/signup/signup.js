@@ -20,6 +20,7 @@ function Signup(props) {
   const [signupPage, setSignupPage] = useState(0);
 
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showGoalDropdown, setShowGoalDropdown] = useState(false);
 
   const [loginStatus, setLoginStatus] = useState("");
 
@@ -246,7 +247,20 @@ function Signup(props) {
                   );
                 }
               })()}
-              <label>Activity</label>
+              <label
+                style={{
+                  position: "relative",
+                  top: "-10px",
+                }}
+              >
+                Activity
+              </label>
+              <img
+                className="dropdown-icon"
+                src={require("../../../images/dropdown.png")}
+                alt=""
+                style={{ transform: showDropdown ? "rotate(180deg)" : null }}
+              />
               <div className="Dropdown-container">
                 <div
                   onClick={() => {
@@ -309,13 +323,52 @@ function Signup(props) {
                     physical job
                   </p>
                 </div>
-                <img
-                  className="dropdown-icon"
-                  src={require("../../../images/dropdown.png")}
-                  alt=""
-                  style={{ transform: showDropdown ? "rotate(180deg)" : null }}
-                />
               </div>
+              {showDropdown ? (
+                <div
+                  className="goal-container-hide"
+                  onClick={() => {
+                    setShowGoalDropdown(false);
+                    setShowDropdown(false);
+                  }}
+                >
+                  <label>Goal hide</label>
+                  <img
+                    className="dropdown-icon-goal"
+                    src={require("../../../images/dropdown.png")}
+                    alt=""
+                    //style={{ transform: showDropdown ? "rotate(180deg)" : null }}
+                  />
+                  <div className="goal-dropdown-container">
+                    <p>Goal...</p>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="goal-container-show"
+                  onClick={() => {
+                    setShowGoalDropdown(true);
+                    setShowDropdown(false);
+                  }}
+                >
+                  <label>Goal show</label>
+                  <img
+                    className="dropdown-icon-goal"
+                    src={require("../../../images/dropdown.png")}
+                    alt=""
+                    //style={{ transform: showDropdown ? "rotate(180deg)" : null }}
+                  />
+                  <div className="goal-dropdown-container">
+                    <p>Goal...</p>
+                    {showGoalDropdown ? (
+                      <div className="goal-dropdown-menu">
+                        <p>Gain</p>
+                        <p>Lose</p>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              )}
             </div>
             {signupPage == 1 &&
             age >= 15 &&
@@ -343,7 +396,9 @@ function Signup(props) {
               >
                 Sign Up
               </button>
-            ) : <></>}
+            ) : (
+              <></>
+            )}
           </div>
         </>
       );
