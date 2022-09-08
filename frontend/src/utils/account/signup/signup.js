@@ -16,7 +16,7 @@ function Signup(props) {
   const [weight, setWeight] = useState(0);
   const [gender, setGender] = useState("m");
   const [activity, setActivity] = useState("Activity level...");
-  const [goal, setGoal] = useState("Goal...");
+  const [goal, setGoal] = useState("Maintain Weight");
 
   const [signupPage, setSignupPage] = useState(0);
 
@@ -78,8 +78,7 @@ function Signup(props) {
           age <= 80 &&
           height != 0 &&
           weight != 0 &&
-          activity != "Activity level..." &&
-          goal != "Goal..."
+          activity != "Activity level..."
         ) {
           handleSignup();
         } else {
@@ -419,8 +418,7 @@ function Signup(props) {
             age <= 80 &&
             height != 0 &&
             weight != 0 &&
-            activity != "Activity level..." &&
-            goal != "Goal..." ? (
+            activity != "Activity level..." ? (
               <button
                 onClick={() => {
                   if (
@@ -432,8 +430,7 @@ function Signup(props) {
                     age <= 80 &&
                     height != 0 &&
                     weight != 0 &&
-                    activity != "Activity level..." &&
-                    goal != "Goal..."
+                    activity != "Activity level..."
                   ) {
                     handleSignup();
                   }
