@@ -16,6 +16,7 @@ function Signup(props) {
   const [weight, setWeight] = useState(0);
   const [gender, setGender] = useState("m");
   const [activity, setActivity] = useState("Activity level...");
+  const [goal, setGoal] = useState("Goal...");
 
   const [signupPage, setSignupPage] = useState(0);
 
@@ -77,7 +78,8 @@ function Signup(props) {
           age <= 80 &&
           height != 0 &&
           weight != 0 &&
-          activity != "Activity level..."
+          activity != "Activity level..." &&
+          goal != "Goal..."
         ) {
           handleSignup();
         } else {
@@ -271,7 +273,10 @@ function Signup(props) {
                   <p>{activity}</p>
                 </div>
                 <div
-                  style={{ opacity: showDropdown ? "1" : "0" }}
+                  style={{
+                    opacity: showDropdown ? "1" : "0",
+                    "z-index": showDropdown ? "1" : "-1",
+                  }}
                   className="Dropdown-menu"
                 >
                   <p
@@ -332,7 +337,7 @@ function Signup(props) {
                     setShowDropdown(false);
                   }}
                 >
-                  <label>Goal hide</label>
+                  <label>Weight Goal</label>
                   <img
                     className="dropdown-icon-goal"
                     src={require("../../../images/dropdown.png")}
@@ -340,32 +345,71 @@ function Signup(props) {
                     //style={{ transform: showDropdown ? "rotate(180deg)" : null }}
                   />
                   <div className="goal-dropdown-container">
-                    <p>Goal...</p>
+                    <p>{goal}</p>
                   </div>
                 </div>
               ) : (
                 <div
                   className="goal-container-show"
                   onClick={() => {
-                    setShowGoalDropdown(true);
+                    setShowGoalDropdown((prev) => !prev);
                     setShowDropdown(false);
                   }}
                 >
-                  <label>Goal show</label>
+                  <label>Weight Goal</label>
                   <img
                     className="dropdown-icon-goal"
                     src={require("../../../images/dropdown.png")}
                     alt=""
-                    //style={{ transform: showDropdown ? "rotate(180deg)" : null }}
+                    style={{
+                      transform: showGoalDropdown ? "rotate(180deg)" : null,
+                    }}
                   />
-                  <div className="goal-dropdown-container">
-                    <p>Goal...</p>
-                    {showGoalDropdown ? (
-                      <div className="goal-dropdown-menu">
-                        <p>Gain</p>
-                        <p>Lose</p>
-                      </div>
-                    ) : null}
+                  <div
+                    className="goal-dropdown-container"
+                    style={{ height: showGoalDropdown ? "auto" : "50px" }}
+                  >
+                    <p>{goal}</p>
+                    <div
+                      className="goal-dropdown-menu"
+                      style={{ opacity: showGoalDropdown ? "1" : "0" }}
+                    >
+                      <p
+                        onClick={() => {
+                          setGoal("Heavy Weight Gain");
+                        }}
+                      >
+                        Heavy Weight <b>Gain</b>
+                      </p>
+                      <p
+                        onClick={() => {
+                          setGoal("Slight Weight Gain");
+                        }}
+                      >
+                        Slight Weight <b>Gain</b>
+                      </p>
+                      <p
+                        onClick={() => {
+                          setGoal("Maintain Weight");
+                        }}
+                      >
+                        Maintain Weight
+                      </p>
+                      <p
+                        onClick={() => {
+                          setGoal("Slight Weight Loss");
+                        }}
+                      >
+                        Slight Weight <b>Loss</b>
+                      </p>
+                      <p
+                        onClick={() => {
+                          setGoal("Heavy Weight Loss");
+                        }}
+                      >
+                        Heavy Weight <b>Loss</b>
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}
@@ -375,7 +419,8 @@ function Signup(props) {
             age <= 80 &&
             height != 0 &&
             weight != 0 &&
-            activity != "Activity level..." ? (
+            activity != "Activity level..." &&
+            goal != "Goal..." ? (
               <button
                 onClick={() => {
                   if (
@@ -387,7 +432,8 @@ function Signup(props) {
                     age <= 80 &&
                     height != 0 &&
                     weight != 0 &&
-                    activity != "Activity level..."
+                    activity != "Activity level..." &&
+                    goal != "Goal..."
                   ) {
                     handleSignup();
                   }
