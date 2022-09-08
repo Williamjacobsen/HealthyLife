@@ -34,9 +34,11 @@ function Signup(props) {
       height: height,
       weight: weight,
       activity: activity,
+      goal: goal,
     })
       .then((res) => {
         const calories = res.data.calorie;
+        const goalCalories = res.data.goal;
         console.log("Succesfully created account...");
       })
       .catch((err) => {
@@ -275,7 +277,6 @@ function Signup(props) {
                 <div
                   style={{
                     opacity: showDropdown ? "1" : "0",
-                    "z-index": showDropdown ? "1" : "-1",
                   }}
                   className="Dropdown-menu"
                 >
