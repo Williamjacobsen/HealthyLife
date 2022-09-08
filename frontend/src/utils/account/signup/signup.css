@@ -275,11 +275,12 @@ label {
   background-color: #c6e377;
 }
 
-.close-btn-signup {
+.close-btn-signup { 
   position: fixed;
-  top: 25%;
-  right: 20%;
-  padding: 25px;
+  top: 24%;
+  right: 21%;
+  height: 80px;
+  width: 80px;
 }
 
 .close-btn-signup-line-one,
@@ -293,6 +294,9 @@ label {
 
 .close-btn-signup-line-one {
   transform: rotate(45deg);
+  position: fixed;
+  top: 27.5%;
+  right: 21.25%;
 }
 
 .close-btn-signup-line-two {

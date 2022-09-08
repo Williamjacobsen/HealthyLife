@@ -317,26 +317,33 @@ function Signup(props) {
                 />
               </div>
             </div>
-            <button
-              onClick={() => {
-                if (
-                  signupPage == 1 &&
-                  FirstnameSignUp != "" &&
-                  LastnameSignUp != "" &&
-                  passwordSignUp != "" &&
-                  age >= 15 &&
-                  age <= 80 &&
-                  height != 0 &&
-                  weight != 0 &&
-                  activity != "Activity level..."
-                ) {
-                  handleSignup();
-                }
-              }}
-              className="signup-btn-confirm"
-            >
-              Sign Up
-            </button>
+            {signupPage == 1 &&
+            age >= 15 &&
+            age <= 80 &&
+            height != 0 &&
+            weight != 0 &&
+            activity != "Activity level..." ? (
+              <button
+                onClick={() => {
+                  if (
+                    signupPage == 1 &&
+                    FirstnameSignUp != "" &&
+                    LastnameSignUp != "" &&
+                    passwordSignUp != "" &&
+                    age >= 15 &&
+                    age <= 80 &&
+                    height != 0 &&
+                    weight != 0 &&
+                    activity != "Activity level..."
+                  ) {
+                    handleSignup();
+                  }
+                }}
+                className="signup-btn-confirm"
+              >
+                Sign Up
+              </button>
+            ) : <></>}
           </div>
         </>
       );
