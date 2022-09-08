@@ -88,6 +88,22 @@ app.post("/SignUp", async (req, res) => {
     res.send({ msg: "Calorie error..." });
   }
 
+  var goalCalories = calories.replace(/\,/g, "");
+  goalCalories = Number(goalCalories);
+  if (req.body.goal === "Heavy Weight Gain") {
+    goalCalories += 500;
+  } else if (req.body.goal === "Slight Weight Gain") {
+    goalCalories += 250;
+  } else if (req.body.goal === "slight Weight Loss") {
+    goalCalories -= 250;
+  } else if (req.body.goal === "Heavy Weight Loss") {
+    goalCalories -= 500;
+  }
+
+  if (goalCalories === NaN) {
+    res.send({ msg: "Calorie goal error..." });
+  }
+
   // create new account (username, password, calories)
   bcrypt.hash(req.body.password, saltRounds, (err, hashedPwd) => {
     if (err) {
@@ -95,17 +111,25 @@ app.post("/SignUp", async (req, res) => {
     }
 
     db.query(
-      "INSERT INTO accounts (username, password, calories) VALUES (?,?,?)",
-      [req.body.username, hashedPwd, calories],
+      "INSERT INTO accounts (username, password, calories, goal) VALUES (?,?,?,?)",
+      [
+        req.body.username,
+        hashedPwd,
+        calories,
+        req.body.goal + ": " + goalCalories,
+      ],
       (err, result) => {
         if (err) {
           console.log(err);
           res.send({ msg: "An error occurred" });
         } else {
           console.log(
-            `Succesfully created account - USERNAME : ${req.body.username}...`
+            `Succesfully created account - USERNAME : {${req.body.username}}...`
           );
-          res.send({ calorie: calories });
+          res.send({
+            calorie: calories,
+            goal: req.body.goal + ": " + goalCalories,
+          });
         }
       }
     );
