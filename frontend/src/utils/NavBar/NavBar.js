@@ -24,6 +24,10 @@ function NavBar(props) {
     props.signup(true);
   };
 
+  const handleNavbarBtn = (btn) => {
+    props.btnPress(btn);
+  };
+
   return (
     <div className="navbar-container">
       <div className="navbar-logo-wrapper">
@@ -62,15 +66,15 @@ function NavBar(props) {
       ) : props.pulledFrom === "home" ? (
         <div className="navbar-options-warpper">
           <div className="btn-background-acc" id="btn-background-acc-home">
-            <div onClick={props.btnPress("Guide")}>
+            <div onClick={() => handleNavbarBtn("Guide")}>
               <h4>Guide</h4>
               <img src={require("../../images/info.png")} alt="" />
             </div>
-            <div onClick={props.btnPress("Friends")}>
+            <div onClick={() => handleNavbarBtn("Friends")}>
               <h4>Friends</h4>
               <img src={require("../../images/friends.png")} alt="" />
             </div>
-            <div onClick={props.btnPress("Account")}>
+            <div onClick={() => handleNavbarBtn("Account")}>
               <h4>Account</h4>
               <img
                 src={require("../../images/account_circle_FILL0_wght400_GRAD0_opsz48.png")}

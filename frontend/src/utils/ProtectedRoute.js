@@ -7,7 +7,6 @@ function ProtectedRoute() {
 
   Axios.defaults.withCredentials = true;
   Axios.get("http://localhost:5000/LogInGet").then((response) => {
-    console.log(response.data.loggedIn);
     setIsAuth(response.data.loggedIn);
   });
   
