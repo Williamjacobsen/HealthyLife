@@ -61,8 +61,23 @@ function NavBar(props) {
         </div>
       ) : props.pulledFrom === "home" ? (
         <div className="navbar-options-warpper">
-          <div className="btn-background-acc"></div>
-          <div className="btn-background-acc-linebreak"></div>
+          <div className="btn-background-acc" id="btn-background-acc-home">
+            <div onClick={props.btnPress("Guide")}>
+              <h4>Guide</h4>
+              <img src={require("../../images/info.png")} alt="" />
+            </div>
+            <div onClick={props.btnPress("Friends")}>
+              <h4>Friends</h4>
+              <img src={require("../../images/friends.png")} alt="" />
+            </div>
+            <div onClick={props.btnPress("Account")}>
+              <h4>Account</h4>
+              <img
+                src={require("../../images/account_circle_FILL0_wght400_GRAD0_opsz48.png")}
+                alt=""
+              />
+            </div>
+          </div>
         </div>
       ) : (
         <div className="navbar-options-warpper">

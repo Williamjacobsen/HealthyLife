@@ -1,14 +1,15 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import "./login.css";
 import { useNavigate } from "react-router-dom";
 
 function Login(props) {
   /* eslint-disable */
-  const [firstnameLogIn, setFirstnameLogIn] = useState("");
-  const [lastnameLogIn, setLastnameLogIn] = useState("");
-  const [passwordLogIn, setPasswordLogIn] = useState("");
+
+  const [firstnameLogIn, setFirstnameLogIn] = useState(null);
+  const [lastnameLogIn, setLastnameLogIn] = useState(null);
+  const [passwordLogIn, setPasswordLogIn] = useState(null);
 
   let navigate = useNavigate();
   const LogIn = () => {
@@ -26,6 +27,28 @@ function Login(props) {
         window.location.reload(false);
       });
   };
+
+  useEffect(() => {
+    const keyDownHandler = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        if (
+          firstnameLogIn != "" &&
+          lastnameLogIn != "" &&
+          passwordLogIn != ""
+        ) {
+          LogIn();
+        } else {
+          console.log("Something went wrong, please try again...");
+          window.location.reload(false);
+        }
+      }
+    };
+    document.addEventListener("keydown", keyDownHandler);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [firstnameLogIn, lastnameLogIn, passwordLogIn]);
 
   return (
     <div className="signup-background">

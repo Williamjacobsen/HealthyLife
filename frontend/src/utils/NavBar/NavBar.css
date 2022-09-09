@@ -145,4 +145,37 @@
   font-size: 27px;
 }
 
+#btn-background-acc-home {
+  width: 500px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 60px;
+  font-size: 20px;
+}
 
+#btn-background-acc-home img {
+  width: 40px;
+  position: fixed;
+  top: 30px;
+  margin-left: 80px;
+}
+
+#btn-background-acc-home div h4 {
+  font-size: 20px;
+  transition: all 0.1s ease-in-out;
+}
+
+#btn-background-acc-home div img {
+  width: 40px;
+  transition: all 0.1s ease-in-out;
+}
+
+#btn-background-acc-home div:hover h4 {
+  font-size: 22px;
+}
+
+#btn-background-acc-home div:hover img {
+  width: 44px;
+}
