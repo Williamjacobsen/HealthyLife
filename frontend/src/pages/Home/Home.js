@@ -8,6 +8,8 @@ function Home() {
   /* eslint-disable */
   const [navBarButtonPressed, setNavBarButtonPressed] = useState(null);
   const [navbarTabsPressed, setNavbarTabsPressed] = useState("Your Foods");
+  const [sidebarTabsPressed, setSidebarTabsPressed] =
+    useState("Calorie Tracker");
 
   const [username, setUsername] = useState(null);
 
@@ -26,18 +28,53 @@ function Home() {
     console.log(navbarTabsPressed);
   }, [navbarTabsPressed]);
 
-  const sidebarTabsPressed = (title, active) => {};
+  const sidebarTabs = (title, active, id) => {
+    return (
+      <>
+        <div
+          className="sidebar-tabs-container"
+          style={{
+            top: id * 120 + 130 + "px",
+            backgroundColor: active ? "#c6e377" : "#c6e37750",
+          }}
+          onClick={() => {
+            setSidebarTabsPressed(title);
+          }}
+        >
+          <h4>{title}</h4>
+        </div>
+      </>
+    );
+  };
 
   const sidebar = () => {
     return (
-      <div className="sidebar-container">
-        <div className="sidebar-account">
-          <div className="sidebar-account-icon"></div>
-          <h4>{username}</h4>
-          <p>Total Points: </p>
+      <>
+        <div className="sidebar-container">
+          <div className="sidebar-account">
+            <div className="sidebar-account-icon"></div>
+            <div className="sidebar-center-account">
+              <h4>{username}</h4>
+            </div>
+            <div className="sidebar-center-account">
+              <p>Total Points: </p>
+            </div>
+          </div>
+          <div className="sidebar-tabs">
+            {sidebarTabs(
+              "Calorie Tracker",
+              sidebarTabsPressed === "Calorie Tracker",
+              1
+            )}
+            {sidebarTabs("Progess", sidebarTabsPressed === "Progess", 2)}
+            {sidebarTabs("Account", sidebarTabsPressed === "Account", 3)}
+            {sidebarTabs("Contact Us", sidebarTabsPressed === "Contact Us", 4)}
+          </div>
         </div>
-        <div className="sidebar-tabs"></div>
-      </div>
+        <div>
+          {sidebarTabsPressed === "Calorie Tracker" ? CaloriesTracker() : null}
+        </div>
+      </>
     );
   };
 
@@ -57,7 +94,7 @@ function Home() {
     );
   };
 
-  const CaloriesPage = () => {
+  const CaloriesTracker = () => {
     return (
       <div className="main-page-container">
         {pageNavbarTabs("Your Foods", navbarTabsPressed === "Your Foods")}
@@ -77,7 +114,6 @@ function Home() {
         ) : null}
       </div>
       {sidebar()}
-      {CaloriesPage()}
     </div>
   );
 }

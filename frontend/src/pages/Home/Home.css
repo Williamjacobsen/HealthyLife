@@ -58,3 +58,30 @@
   margin-left: -20px;
   position: absolute;
 }
+
+.sidebar-center-account {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  width: 20%;
+  left: 0;
+  height: 20px;
+}
+
+.sidebar-tabs-container {
+  transition: all 0.1s ease-in-out;
+  border-radius: 20px;
+  position: absolute;
+  top: 250px;
+  left: 17.5%;
+  height: 100px;
+  width: 250px;
+  background-color: #c6e377;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-tabs-container h4 {
+  font-size: 22px;
+}
