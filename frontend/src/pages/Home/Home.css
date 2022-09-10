@@ -1,8 +1,60 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
+.main-page-container {
+  background-color: #c6e377;
+  height: 75%;
+  width: 80%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
 
+.navbar-tabs-container {
+  transition: all 0.1s ease-in-out;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  height: 12.5%;
+  width: 15%;
+  position: relative;
+  float: left;
+  top: -12.5%;
+}
 
+.sidebar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 82.5%;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar-account-icon {
+  background-image: url(../../images/account.svg);
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.sidebar-account h4 {
+  font-size: 24px;
+  margin-left: -20px;
+  position: absolute;
+}
+
+.sidebar-account p {
+  font-size: 18px;
+  margin-top: 40px;
+  margin-left: -20px;
+  position: absolute;
+}
