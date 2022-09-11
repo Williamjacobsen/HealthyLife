@@ -5,6 +5,7 @@
 }
 
 .main-page-container {
+  opacity: 1;
   background-color: #c6e377;
   height: 75%;
   width: 80%;

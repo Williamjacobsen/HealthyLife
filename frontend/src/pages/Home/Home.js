@@ -7,7 +7,7 @@ import "./Home.css";
 function Home() {
   /* eslint-disable */
   const [navBarButtonPressed, setNavBarButtonPressed] = useState(null);
-  const [navbarTabsPressed, setNavbarTabsPressed] = useState("Your Foods");
+  const [navbarTabsPressed, setNavbarTabsPressed] = useState("Calorie Tracker");
   const [sidebarTabsPressed, setSidebarTabsPressed] =
     useState("Calorie Tracker");
 
@@ -25,7 +25,7 @@ function Home() {
   };
 
   useEffect(() => {
-    console.log(navbarTabsPressed);
+    // console.log(navbarTabsPressed);
   }, [navbarTabsPressed]);
 
   const sidebarTabs = (title, active, id) => {
@@ -39,6 +39,7 @@ function Home() {
           }}
           onClick={() => {
             setSidebarTabsPressed(title);
+            setNavbarTabsPressed(title);
           }}
         >
           <h4>{title}</h4>
@@ -48,6 +49,7 @@ function Home() {
   };
 
   const sidebar = () => {
+    const tabs = ["Calorie Tracker", "Progress", "Account", "Contact Us"];
     return (
       <>
         <div className="sidebar-container">
@@ -61,18 +63,17 @@ function Home() {
             </div>
           </div>
           <div className="sidebar-tabs">
-            {sidebarTabs(
-              "Calorie Tracker",
-              sidebarTabsPressed === "Calorie Tracker",
-              1
-            )}
-            {sidebarTabs("Progess", sidebarTabsPressed === "Progess", 2)}
-            {sidebarTabs("Account", sidebarTabsPressed === "Account", 3)}
-            {sidebarTabs("Contact Us", sidebarTabsPressed === "Contact Us", 4)}
+            {sidebarTabs(tabs[0], sidebarTabsPressed === tabs[0], 1)}
+            {sidebarTabs(tabs[1], sidebarTabsPressed === tabs[1], 2)}
+            {sidebarTabs(tabs[2], sidebarTabsPressed === tabs[2], 3)}
+            {sidebarTabs(tabs[3], sidebarTabsPressed === tabs[3], 4)}
           </div>
         </div>
         <div>
-          {sidebarTabsPressed === "Calorie Tracker" ? CaloriesTracker() : null}
+          {sidebarTabsPressed === tabs[0] ? CaloriesTracker() : null}
+          {sidebarTabsPressed === tabs[1] ? Progress() : null}
+          {sidebarTabsPressed === tabs[2] ? Account() : null}
+          {sidebarTabsPressed === tabs[3] ? ContactUs() : null}
         </div>
       </>
     );
@@ -95,10 +96,43 @@ function Home() {
   };
 
   const CaloriesTracker = () => {
+    const tabs = ["Calorie Tracker", "Friends"];
     return (
       <div className="main-page-container">
-        {pageNavbarTabs("Your Foods", navbarTabsPressed === "Your Foods")}
-        {pageNavbarTabs("Friends", navbarTabsPressed === "Friends")}
+        {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
+        {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
+      </div>
+    );
+  };
+
+  const Progress = () => {
+    const tabs = ["Progress", "Statistics", "Friends"];
+    return (
+      <div className="main-page-container">
+        {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
+        {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
+        {pageNavbarTabs(tabs[2], navbarTabsPressed === tabs[2])}
+      </div>
+    );
+  };
+
+  const Account = () => {
+    const tabs = ["Account", "Calorie Goal", "Settings"];
+    return (
+      <div className="main-page-container">
+        {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
+        {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
+        {pageNavbarTabs(tabs[2], navbarTabsPressed === tabs[2])}
+      </div>
+    );
+  };
+
+  const ContactUs = () => {
+    const tabs = ["Contact Us", "Who are we?"];
+    return (
+      <div className="main-page-container">
+        {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
+        {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
       </div>
     );
   };
