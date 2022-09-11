@@ -29,9 +29,9 @@ const getData = async (age, gender, height, weight, activity) => {
   return baseCalories;
 };
 
-async function tableauSignin(age, gender, height, weight, activity) {
+async function getCalorieData(age, gender, height, weight, activity) {
   var response = await getData(age, gender, height, weight, activity);
   return response;
 }
 
-module.exports = { tableauSignin };
+module.exports = { getCalorieData };
