@@ -6,27 +6,68 @@ import "./Home.css";
 
 function Home() {
   /* eslint-disable */
+  Axios.defaults.withCredentials = true;
+
   const [navBarButtonPressed, setNavBarButtonPressed] = useState(null);
   const [navbarTabsPressed, setNavbarTabsPressed] = useState("Calorie Tracker");
   const [sidebarTabsPressed, setSidebarTabsPressed] =
     useState("Calorie Tracker");
 
   const [username, setUsername] = useState(null);
-
-  useEffect(() => {
-    Axios.defaults.withCredentials = true;
-    Axios.get("http://localhost:5000/LogInGet").then((response) => {
-      setUsername(response.data.user[0].username);
-    });
-  }, []);
+  const [password, setPassword] = useState(null);
+  const [calories, setCaloires] = useState("");
+  const [goal, setGoal] = useState(0);
+  const [points, setPoints] = useState(0);
 
   const handleNavbarBtn = (handleNavbarBtn) => {
     setNavBarButtonPressed(handleNavbarBtn);
   };
 
   useEffect(() => {
+    if (username !== null && password !== null) {
+      console.log(
+        "Account: " +
+          username +
+          ", password: " +
+          password +
+          ", points: " +
+          points +
+          ", calories: " +
+          calories +
+          ", goal: " +
+          goal
+      );
+    }
+  }),
+    [username, password, calories, goal, points];
+
+  useEffect(() => {
+    Axios.get("http://localhost:5000/LogInGet").then((response) => {
+      setUsername(response.data.user[0].username);
+      setPassword(response.data.user[0].password);
+      setCaloires(response.data.user[0].calories);
+      setGoal(response.data.user[0].goal);
+      setPoints(response.data.user[0].points);
+    });
+  }, []);
+
+  useEffect(() => {
     // console.log(navbarTabsPressed);
   }, [navbarTabsPressed]);
+
+  const updatePoints = () => {
+    if (username !== null && password !== null) {
+      Axios.post("http://localhost:5000/updatePoints", {
+        username: username,
+        password: password,
+        points: points,
+      }).then((res) => {
+        console.log("updatePoints : ");
+        console.log(res);
+        setPoints(res.data.points);
+      });
+    }
+  };
 
   const sidebarTabs = (title, active, id) => {
     return (
@@ -59,7 +100,7 @@ function Home() {
               <h4>{username}</h4>
             </div>
             <div className="sidebar-center-account">
-              <p>Total Points: </p>
+              <p>Total Points: {points}</p>
             </div>
           </div>
           <div className="sidebar-tabs">
