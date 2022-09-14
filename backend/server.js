@@ -176,4 +176,42 @@ app.post("/Login", (req, res) => {
   );
 });
 
+app.post("/updatePoints", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const points = req.body.points;
+
+  if (username == null || password == null) {
+    res.send({ message: "Account info null..." });
+  }
+
+  db.query(
+    "SELECT * FROM accounts WHERE username = ?;",
+    username,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      if (result.length > 0) {
+        if (
+          result[0].username === username &&
+          result[0].password === password
+        ) {
+          db.query(
+            "UPDATE accounts SET points = ? WHERE username = ?",
+            [points, username],
+            (err, result) => {
+              res.send({ points: points, err: err, result: result });
+            }
+          );
+        } else {
+          res.send({ message: "Wrong username/password combination!" });
+        }
+      } else {
+        res.send({ message: "User does not exist!" });
+      }
+    }
+  );
+});
+
 app.listen(5000, () => console.log(`Server listening on port 5000...`));
