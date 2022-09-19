@@ -86,3 +86,40 @@
 .sidebar-tabs-container h4 {
   font-size: 22px;
 }
+
+.CalorieTracker-contianer {
+  position: fixed;
+  top: 32.5%;
+  left: 25%;
+}
+
+.CalorieTracker-foods {
+  background-color: #fbfad3;
+  border-radius: 20px;
+  height: 700px;
+  width: 600px;
+}
+
+.CalorieTracker-statistics {
+  position: fixed;
+  right: 5%;
+  top: 325px;
+  background-color: #fbfad3;
+  border-radius: 20px;
+  height: 350px;
+  width: 600px;
+}
+
+@media (max-width: 1750px) {
+  .CalorieTracker-statistics {
+    width: 30%;
+    height: 500px;
+  }
+}
+
+@media (max-width: 1500px) {
+  .CalorieTracker-statistics {
+    width: 0%;
+    height: 0px;
+  }
+}

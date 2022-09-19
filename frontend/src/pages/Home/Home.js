@@ -4,6 +4,15 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import "./Home.css";
 
+function CalorieTracker() {
+  return (
+    <div className="CalorieTracker-contianer">
+      <div className="CalorieTracker-foods"></div>
+      <div className="CalorieTracker-statistics"></div>
+    </div>
+  );
+}
+
 function Home() {
   /* eslint-disable */
   Axios.defaults.withCredentials = true;
@@ -139,10 +148,13 @@ function Home() {
   const CaloriesTracker = () => {
     const tabs = ["Calorie Tracker", "Friends"];
     return (
-      <div className="main-page-container">
-        {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
-        {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
-      </div>
+      <>
+        <div className="main-page-container">
+          {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
+          {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
+        </div>
+        <CalorieTracker />
+      </>
     );
   };
 
