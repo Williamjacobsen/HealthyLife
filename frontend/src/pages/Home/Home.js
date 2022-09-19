@@ -29,6 +29,9 @@ function Home() {
   const [goal, setGoal] = useState(0);
   const [points, setPoints] = useState(0);
 
+  const [addFood, setAddFood] = useState("");
+  const [search, setSearch] = useState("");
+
   const handleNavbarBtn = (handleNavbarBtn) => {
     setNavBarButtonPressed(handleNavbarBtn);
   };
@@ -48,8 +51,7 @@ function Home() {
           goal
       );
     }
-  }),
-    [username, password, calories, goal, points];
+  }, [username]); // omfg, i put the [] outside wtfffffff
 
   useEffect(() => {
     Axios.get("http://localhost:5000/LogInGet").then((response) => {
@@ -146,6 +148,20 @@ function Home() {
     );
   };
 
+  const [term, setTerm] = useState("");
+  const [allData, setAllData] = useState([
+    { id: 1, food: "Mushroom", protein: 50 },
+    { id: 2, food: "Drugs", protein: 200 },
+    { id: 3, food: "Brogramming", protein: 69 },
+  ]);
+
+  function searchingFor(term) {
+    // ty google :)
+    return function (x) {
+      return x.food.toLowerCase().includes(term.toLowerCase()) || !term;
+    };
+  }
+
   const CaloriesTracker = () => {
     const tabs = ["Calorie Tracker", "Friends"];
     return (
@@ -161,6 +177,36 @@ function Home() {
             <div className="CalorieTracker-foods-wrapper">
               <div className="CalorieTracker-foods-breakfast">
                 <h4 className="CalorieTracker-foods-meal-title">Breakfast</h4>
+                <img
+                  className="CalorieTracker-foods-title-dropdown"
+                  src={require("../../images/dropdown.png")}
+                  alt=""
+                />
+                <img
+                  className="CalorieTracker-foods-title-add"
+                  src={require("../../images/add.png")}
+                  alt=""
+                  style={{
+                    left: "180px",
+                    top: "-50px",
+                    width: "40px",
+                    height: "40px",
+                  }}
+                  onClick={() => {
+                    setAddFood("Breakfast");
+                  }}
+                />
+                <img
+                  src={require("../../images/info.png")}
+                  alt=""
+                  style={{
+                    left: "140px",
+                    top: "-45px",
+                    width: "30px",
+                    height: "30px",
+                  }}
+                />
+                <div className="CalorieTracker-foods-title-underline"></div>
               </div>
               <div className="CalorieTracker-foods-lunch"></div>
               <div className="CalorieTracker-foods-dinner"></div>
@@ -168,6 +214,52 @@ function Home() {
             </div>
           </div>
         </div>
+        {addFood === "Breakfast" ? (
+          <div className="CalorieTracker-add-foods-container">
+            <div className="CalorieTracker-add-foods">
+              <h4>Search</h4>
+              <p>Add new foods to your diet by searching</p>
+              <input
+                style={{ height: "50px", position: "absolute", top: "150px" }}
+                type="text"
+                placeholder="Search..."
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setTerm(e.target.value);
+                }}
+              />
+              <img
+                src={require("../../images/loupe.png")}
+                alt=""
+                style={{
+                  width: "30px",
+                  height: "30px",
+                  position: "absolute",
+                  top: "170px",
+                  right: "125px",
+                }}
+              />
+              <div
+                className="close-btn-signup"
+                onClick={() => {
+                  setAddFood("");
+                }}
+              >
+                <div className="close-btn-signup-line-one"></div>
+                <div className="close-btn-signup-line-two"></div>
+              </div>
+              {allData.filter(searchingFor(term)).map((data) => (
+                <div key={data.id}>
+                  <h1>{data.food}</h1>
+                  <h1>{data.protein}</h1>
+                  <br></br>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </>
     );
   };
