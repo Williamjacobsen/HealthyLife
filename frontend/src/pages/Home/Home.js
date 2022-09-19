@@ -154,7 +154,20 @@ function Home() {
           {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
           {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
         </div>
-        <div></div>
+        <div>
+          <div className="CalorieTracker-foods-container">
+            <h4 className="CalorieTracker-foods-title">Your Foods</h4>
+            <img src={require("../../images/info.png")} alt="" />
+            <div className="CalorieTracker-foods-wrapper">
+              <div className="CalorieTracker-foods-breakfast">
+                <h4 className="CalorieTracker-foods-meal-title">Breakfast</h4>
+              </div>
+              <div className="CalorieTracker-foods-lunch"></div>
+              <div className="CalorieTracker-foods-dinner"></div>
+              <div className="CalorieTracker-foods-snacks"></div>
+            </div>
+          </div>
+        </div>
       </>
     );
   };
