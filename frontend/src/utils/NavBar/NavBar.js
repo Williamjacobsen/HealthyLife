@@ -4,11 +4,8 @@ import "./NavBar.css";
 
 function NavBar(props) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1200);
-  const [isSmallDesktop, setSmallDesktop] = useState(window.innerWidth > 900);
-
   const updateMedia = () => {
     setDesktop(window.innerWidth > 1200);
-    setSmallDesktop(window.innerWidth > 900);
   };
 
   useEffect(() => {
@@ -31,20 +28,24 @@ function NavBar(props) {
   return (
     <div className="navbar-container">
       <div className="navbar-logo-wrapper">
-        {isSmallDesktop ? (
-          <div>
-            <img
-              src={require("../../images/new/logo_transparent (2).png")}
-              alt=""
-              className="navbar-logo-img"
-            />
-            <img
-              src={require("../../images/new/logo_transparent_text.png")}
-              alt=""
-              className="navbar-logo-text"
-            />
-          </div>
-        ) : null}
+        <img
+          src={require("../../images/new/logo_transparent (2).png")}
+          alt=""
+          className="navbar-logo-img"
+        />
+        {isDesktop ? (
+          <img
+            src={require("../../images/new/logo_transparent_text.png")}
+            alt=""
+            className="navbar-logo-text"
+          />
+        ) : (
+          <img
+            src={require("../../images/menu.png")}
+            alt=""
+            className="navbar-burger-menu"
+          />
+        )}
       </div>
       {props.pulledFrom === "startingPage" ? (
         <div className="navbar-options-warpper">
@@ -64,25 +65,7 @@ function NavBar(props) {
           </h4>
         </div>
       ) : props.pulledFrom === "home" ? (
-        <div className="navbar-options-warpper">
-          <div className="btn-background-acc" id="btn-background-acc-home">
-            <div onClick={() => handleNavbarBtn("Guide")}>
-              <h4>Guide</h4>
-              <img src={require("../../images/info.png")} alt="" />
-            </div>
-            <div onClick={() => handleNavbarBtn("Friends")}>
-              <h4>Friends</h4>
-              <img src={require("../../images/friends.png")} alt="" />
-            </div>
-            <div onClick={() => handleNavbarBtn("Account")}>
-              <h4>Account</h4>
-              <img
-                src={require("../../images/account_circle_FILL0_wght400_GRAD0_opsz48.png")}
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
+        <div className="navbar-options-warpper"></div>
       ) : (
         <div className="navbar-options-warpper">
           <div className="btn-background-navbar"></div>

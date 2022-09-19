@@ -4,18 +4,19 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 import "./Home.css";
 
-function CalorieTracker() {
-  return (
-    <div className="CalorieTracker-contianer">
-      <div className="CalorieTracker-foods"></div>
-      <div className="CalorieTracker-statistics"></div>
-    </div>
-  );
-}
-
 function Home() {
   /* eslint-disable */
   Axios.defaults.withCredentials = true;
+
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 1200);
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 1200);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
 
   const [navBarButtonPressed, setNavBarButtonPressed] = useState(null);
   const [navbarTabsPressed, setNavbarTabsPressed] = useState("Calorie Tracker");
@@ -153,7 +154,7 @@ function Home() {
           {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
           {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
         </div>
-        <CalorieTracker />
+        <div></div>
       </>
     );
   };
@@ -200,7 +201,9 @@ function Home() {
           </div>
         ) : null}
       </div>
-      {sidebar()}
+      <div className="home-container">
+        {isDesktop ? <>{sidebar()}</> : <></>}
+      </div>
     </div>
   );
 }

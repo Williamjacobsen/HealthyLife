@@ -4,6 +4,7 @@
   box-sizing: border-box;
 }
 
+/* navbar */
 .navbar-container {
   background-color: #36622b;
   width: 100%;
@@ -33,17 +34,44 @@
   position: relative;
 }
 
-.navbar-logo-wrapper:hover .navbar-logo-img {
+/* logo */
+.navbar-logo-img:hover {
   filter: drop-shadow(12px 12px 25px rgba(0, 0, 0, 1));
   left: 29%;
 }
 
-.navbar-logo-wrapper:hover .navbar-logo-text {
+.navbar-logo-img:hover .navbar-logo-text {
+  filter: drop-shadow(12px 12px 25px rgba(0, 0, 0, 1));
+  left: 29%;
+}
+
+.navbar-logo-text:hover {
   filter: drop-shadow(12px 12px 25px rgba(0, 0, 0, 1));
   width: 310px;
   left: 29%;
 }
 
+.navbar-logo-text:hover .navbar-logo-text {
+  filter: drop-shadow(12px 12px 25px rgba(0, 0, 0, 1));
+  width: 310px;
+  left: 29%;
+}
+
+/* home */
+.navbar-burger-menu {
+  width: 100px;
+  padding: 25px;
+  position: fixed;
+  right: 5%;
+  transition: all 0.1s ease;
+}
+
+.navbar-burger-menu:hover {
+  padding: 24px;
+  width: 101px;
+}
+
+/* startingPage */
 .btn-background-acc-linebreak {
   border-radius: 50px;
   position: absolute;
@@ -143,39 +171,4 @@
 
 .login-btn:hover {
   font-size: 27px;
-}
-
-#btn-background-acc-home {
-  width: 500px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 20px;
-  padding-right: 60px;
-  font-size: 20px;
-}
-
-#btn-background-acc-home img {
-  width: 40px;
-  position: fixed;
-  top: 30px;
-  margin-left: 80px;
-}
-
-#btn-background-acc-home div h4 {
-  font-size: 20px;
-  transition: all 0.1s ease-in-out;
-}
-
-#btn-background-acc-home div img {
-  width: 40px;
-  transition: all 0.1s ease-in-out;
-}
-
-#btn-background-acc-home div:hover h4 {
-  font-size: 22px;
-}
-
-#btn-background-acc-home div:hover img {
-  width: 44px;
 }
