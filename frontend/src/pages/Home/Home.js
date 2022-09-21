@@ -249,6 +249,99 @@ function Home() {
     );
   };
 
+  const superSubFoodsAdded = (food) => {
+    return (
+      <div>
+        <h6
+          style={{
+            fontSize: "16px",
+            marginTop: "10px",
+            fontWeight: 500,
+          }}
+        >
+          {food}
+        </h6>
+        <div
+          className="CalorieTracker-foods-title-underline"
+          style={{
+            position: "relative",
+            left: "0px",
+            width: "90%",
+          }}
+        ></div>
+      </div>
+    );
+  };
+
+  const subFoodsAdded = (meal) => {
+    return (
+      <>
+        {meal === "Breakfast"
+          ? Breakfast.map((item, index) => (
+              <div key={index}>{superSubFoodsAdded(item)}</div>
+            ))
+          : meal === "Lunch"
+          ? Lunch.map((item, index) => (
+              <div key={index}>{superSubFoodsAdded(item)}</div>
+            ))
+          : null}
+      </>
+    );
+  };
+
+  const mealFoodsArea = (meal, pos, center) => {
+    return (
+      <div
+        className="CalorieTracker-foods-wrapper"
+        style={{ marginTop: pos + "px", marginLeft: center + "px" }}
+      >
+        <div className="CalorieTracker-foods-breakfast">
+          <h4 className="CalorieTracker-foods-meal-title">{meal}</h4>
+          <img
+            className="CalorieTracker-foods-title-dropdown"
+            src={require("../../images/dropdown.png")}
+            alt=""
+          />
+          <img
+            className="CalorieTracker-foods-title-add"
+            src={require("../../images/add.png")}
+            alt=""
+            style={{
+              left: "180px",
+              top: "-50px",
+              width: "40px",
+              height: "40px",
+            }}
+            onClick={() => {
+              setAddMeal(meal);
+            }}
+          />
+          <img
+            src={require("../../images/info.png")}
+            alt=""
+            style={{
+              left: "140px",
+              top: "-45px",
+              width: "30px",
+              height: "30px",
+            }}
+          />
+          <div className="CalorieTracker-foods-title-underline"></div>
+          <div
+            style={{
+              position: "absolute",
+              width: "300px",
+              left: "-75px",
+              marginTop: "10px",
+            }}
+          >
+            {subFoodsAdded(meal)}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const CaloriesTracker = () => {
     const tabs = ["Calorie Tracker", "Friends"];
     return (
@@ -257,75 +350,17 @@ function Home() {
           {pageNavbarTabs(tabs[0], navbarTabsPressed === tabs[0])}
           {pageNavbarTabs(tabs[1], navbarTabsPressed === tabs[1])}
         </div>
-        <div>
-          <div className="CalorieTracker-foods-container">
-            <h4 className="CalorieTracker-foods-title">Your Foods</h4>
-            <img src={require("../../images/info.png")} alt="" />
-            <div className="CalorieTracker-foods-wrapper">
-              <div className="CalorieTracker-foods-breakfast">
-                <h4 className="CalorieTracker-foods-meal-title">Breakfast</h4>
-                <img
-                  className="CalorieTracker-foods-title-dropdown"
-                  src={require("../../images/dropdown.png")}
-                  alt=""
-                />
-                <img
-                  className="CalorieTracker-foods-title-add"
-                  src={require("../../images/add.png")}
-                  alt=""
-                  style={{
-                    left: "180px",
-                    top: "-50px",
-                    width: "40px",
-                    height: "40px",
-                  }}
-                  onClick={() => {
-                    setAddMeal("Breakfast");
-                  }}
-                />
-                <img
-                  src={require("../../images/info.png")}
-                  alt=""
-                  style={{
-                    left: "140px",
-                    top: "-45px",
-                    width: "30px",
-                    height: "30px",
-                  }}
-                />
-                <div className="CalorieTracker-foods-title-underline"></div>
-                <div
-                  style={{
-                    position: "absolute",
-                    width: "300px",
-                    left: "-75px",
-                    marginTop: "10px",
-                  }}
-                >
-                  {Breakfast.map((item) => (
-                    <>
-                      <h6 style={{ fontSize: "16px", marginTop: "10px" }}>
-                        {item}
-                      </h6>
-                      <div
-                        className="CalorieTracker-foods-title-underline"
-                        style={{
-                          position: "relative",
-                          left: "0px",
-                          width: "90%",
-                        }}
-                      ></div>
-                    </>
-                  ))}
-                </div>
-              </div>
-              <div className="CalorieTracker-foods-lunch"></div>
-              <div className="CalorieTracker-foods-dinner"></div>
-              <div className="CalorieTracker-foods-snacks"></div>
+        {navbarTabsPressed === tabs[0] ? (
+          <>
+            <div className="CalorieTracker-foods-container">
+              <h4 className="CalorieTracker-foods-title">Your Foods</h4>
+              <img src={require("../../images/info.png")} alt="" />
+              {mealFoodsArea("Breakfast", 0, 0)}
+              {mealFoodsArea("Lunch", Breakfast.length * 40 + 50, -35)}
             </div>
-          </div>
-        </div>
-        {addMeal === "Breakfast" ? searchBar() : <></>}
+          </>
+        ) : null}
+        {addMeal !== "" ? searchBar() : <></>}
       </>
     );
   };
