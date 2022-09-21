@@ -30,10 +30,10 @@ function Home() {
   const [points, setPoints] = useState(0);
 
   const [addMeal, setAddMeal] = useState("");
-  const [addBreakfast, setAddBreakfast] = useState([]);
-  const [addLunch, setAddLunch] = useState([]);
-  const [addDinner, setAddDinner] = useState([]);
-  const [addSnacks, setAddSnacks] = useState([]);
+  const [Breakfast, setBreakfast] = useState([]);
+  const [Lunch, setLunch] = useState([]);
+  const [Dinner, setDinner] = useState([]);
+  const [Snacks, setSnacks] = useState([]);
   const [search, setSearch] = useState("");
 
   const [foods, setFoods] = useState(null);
@@ -94,10 +94,10 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (foods !== null) {
-      console.log(foods);
+    if (Breakfast !== null) {
+      console.log(Breakfast);
     }
-  }, [foods]);
+  }, [Breakfast]);
 
   const sidebarTabs = (title, active, id) => {
     return (
@@ -239,9 +239,7 @@ function Home() {
                       top: "7.5px",
                       right: "-50px",
                     }}
-                    onClick={() =>
-                      setAddBreakfast((prev) => [...prev, data.name])
-                    }
+                    onClick={() => setBreakfast((prev) => [...prev, data.name])}
                   />
                 </div>
               ))
@@ -296,6 +294,30 @@ function Home() {
                   }}
                 />
                 <div className="CalorieTracker-foods-title-underline"></div>
+                <div
+                  style={{
+                    position: "absolute",
+                    width: "300px",
+                    left: "-75px",
+                    marginTop: "10px",
+                  }}
+                >
+                  {Breakfast.map((item) => (
+                    <>
+                      <h6 style={{ fontSize: "16px", marginTop: "10px" }}>
+                        {item}
+                      </h6>
+                      <div
+                        className="CalorieTracker-foods-title-underline"
+                        style={{
+                          position: "relative",
+                          left: "0px",
+                          width: "90%",
+                        }}
+                      ></div>
+                    </>
+                  ))}
+                </div>
               </div>
               <div className="CalorieTracker-foods-lunch"></div>
               <div className="CalorieTracker-foods-dinner"></div>
