@@ -29,8 +29,11 @@ function Home() {
   const [goal, setGoal] = useState(0);
   const [points, setPoints] = useState(0);
 
+  const [addMeal, setAddMeal] = useState("");
   const [addFood, setAddFood] = useState("");
   const [search, setSearch] = useState("");
+
+  const [foods, setFoods] = useState(null);
 
   const handleNavbarBtn = (handleNavbarBtn) => {
     setNavBarButtonPressed(handleNavbarBtn);
@@ -80,6 +83,18 @@ function Home() {
       });
     }
   };
+
+  useEffect(() => {
+    Axios.get("http://localhost:5000/foods").then((res) => {
+      setFoods(res.data.foods);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (foods !== null) {
+      console.log(foods);
+    }
+  }, [foods]);
 
   const sidebarTabs = (title, active, id) => {
     return (
@@ -158,10 +173,11 @@ function Home() {
   function searchingFor(term) {
     // ty google :)
     return function (x) {
-      return x.food.toLowerCase().includes(term.toLowerCase()) || !term;
+      return x.name.toLowerCase().includes(term.toLowerCase()) || !term;
     };
   }
 
+  var counter = 0;
   const CaloriesTracker = () => {
     const tabs = ["Calorie Tracker", "Friends"];
     return (
@@ -193,7 +209,7 @@ function Home() {
                     height: "40px",
                   }}
                   onClick={() => {
-                    setAddFood("Breakfast");
+                    setAddMeal("Breakfast");
                   }}
                 />
                 <img
@@ -214,49 +230,78 @@ function Home() {
             </div>
           </div>
         </div>
-        {addFood === "Breakfast" ? (
-          <div className="CalorieTracker-add-foods-container">
-            <div className="CalorieTracker-add-foods">
-              <h4>Search</h4>
-              <p>Add new foods to your diet by searching</p>
-              <input
-                style={{ height: "50px", position: "absolute", top: "150px" }}
-                type="text"
-                placeholder="Search..."
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setTerm(e.target.value);
-                }}
-              />
-              <img
-                src={require("../../images/loupe.png")}
-                alt=""
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  position: "absolute",
-                  top: "170px",
-                  right: "125px",
-                }}
-              />
-              <div
-                className="close-btn-signup"
-                onClick={() => {
-                  setAddFood("");
-                }}
-              >
-                <div className="close-btn-signup-line-one"></div>
-                <div className="close-btn-signup-line-two"></div>
-              </div>
-              {allData.filter(searchingFor(term)).map((data) => (
-                <div key={data.id}>
-                  <h1>{data.food}</h1>
-                  <h1>{data.protein}</h1>
-                  <br></br>
+        {addMeal === "Breakfast" ? (
+          <>
+            <div className="CalorieTracker-add-foods-container">
+              <div className="CalorieTracker-add-foods">
+                <h4>Search</h4>
+                <p>Add new foods to your diet by searching</p>
+                <input
+                  style={{ height: "50px", position: "absolute", top: "150px" }}
+                  type="text"
+                  placeholder="Search..."
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setTerm(e.target.value);
+                  }}
+                />
+                <img
+                  src={require("../../images/loupe.png")}
+                  alt=""
+                  style={{
+                    width: "30px",
+                    height: "30px",
+                    position: "absolute",
+                    top: "170px",
+                    right: "125px",
+                  }}
+                />
+                <div
+                  className="close-btn-signup"
+                  onClick={() => {
+                    setAddMeal("");
+                  }}
+                >
+                  <div className="close-btn-signup-line-one"></div>
+                  <div className="close-btn-signup-line-two"></div>
                 </div>
-              ))}
+                {search != "" && foods != null
+                  ? foods.filter(searchingFor(term)).map((data) => (
+                      <div
+                        key={data.idfoods}
+                        style={{
+                          position: "absolute",
+                          top: 225 + counter + "px",
+                        }}
+                      >
+                        <h1
+                          style={{
+                            position: "absolute",
+                            zIndex: -1,
+                            opacity: 0,
+                          }}
+                        >
+                          {(counter += 50)}
+                        </h1>
+                        <h1 style={{ fontWeight: 400 }}>{data.name}</h1>
+                        <img
+                          src={require("../../images/add.png")}
+                          alt=""
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            position: "absolute",
+                            top: "7.5px",
+                            right: "-50px",
+                          }}
+                          onClick={() => setAddFood(data.food)}
+                        />
+                      </div>
+                    ))
+                  : null}
+              </div>
             </div>
-          </div>
+          </>
         ) : (
           <></>
         )}
