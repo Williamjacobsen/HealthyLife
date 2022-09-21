@@ -30,7 +30,10 @@ function Home() {
   const [points, setPoints] = useState(0);
 
   const [addMeal, setAddMeal] = useState("");
-  const [addFood, setAddFood] = useState("");
+  const [addBreakfast, setAddBreakfast] = useState([]);
+  const [addLunch, setAddLunch] = useState([]);
+  const [addDinner, setAddDinner] = useState([]);
+  const [addSnacks, setAddSnacks] = useState([]);
   const [search, setSearch] = useState("");
 
   const [foods, setFoods] = useState(null);
@@ -164,12 +167,6 @@ function Home() {
   };
 
   const [term, setTerm] = useState("");
-  const [allData, setAllData] = useState([
-    { id: 1, food: "Mushroom", protein: 50 },
-    { id: 2, food: "Drugs", protein: 200 },
-    { id: 3, food: "Brogramming", protein: 69 },
-  ]);
-
   function searchingFor(term) {
     // ty google :)
     return function (x) {
@@ -177,7 +174,83 @@ function Home() {
     };
   }
 
-  var counter = 0;
+  const searchBar = () => {
+    var counter = 0;
+    return (
+      <div className="CalorieTracker-add-foods-container">
+        <div className="CalorieTracker-add-foods">
+          <h4>Search</h4>
+          <p>Add new foods to your diet by searching</p>
+          <input
+            style={{ height: "50px", position: "absolute", top: "150px" }}
+            type="text"
+            placeholder="Search..."
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setTerm(e.target.value);
+            }}
+          />
+          <img
+            src={require("../../images/loupe.png")}
+            alt=""
+            style={{
+              width: "30px",
+              height: "30px",
+              position: "absolute",
+              top: "170px",
+              right: "125px",
+            }}
+          />
+          <div
+            className="close-btn-signup"
+            onClick={() => {
+              setAddMeal("");
+            }}
+          >
+            <div className="close-btn-signup-line-one"></div>
+            <div className="close-btn-signup-line-two"></div>
+          </div>
+          {search != "" && foods != null
+            ? foods.filter(searchingFor(term)).map((data) => (
+                <div
+                  key={data.idfoods}
+                  style={{
+                    position: "absolute",
+                    top: 225 + counter + "px",
+                  }}
+                >
+                  <h1
+                    style={{
+                      position: "absolute",
+                      zIndex: -1,
+                      opacity: 0,
+                    }}
+                  >
+                    {(counter += 50)}
+                  </h1>
+                  <h1 style={{ fontWeight: 400 }}>{data.name}</h1>
+                  <img
+                    src={require("../../images/add.png")}
+                    alt=""
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      position: "absolute",
+                      top: "7.5px",
+                      right: "-50px",
+                    }}
+                    onClick={() =>
+                      setAddBreakfast((prev) => [...prev, data.name])
+                    }
+                  />
+                </div>
+              ))
+            : null}
+        </div>
+      </div>
+    );
+  };
+
   const CaloriesTracker = () => {
     const tabs = ["Calorie Tracker", "Friends"];
     return (
@@ -230,81 +303,7 @@ function Home() {
             </div>
           </div>
         </div>
-        {addMeal === "Breakfast" ? (
-          <>
-            <div className="CalorieTracker-add-foods-container">
-              <div className="CalorieTracker-add-foods">
-                <h4>Search</h4>
-                <p>Add new foods to your diet by searching</p>
-                <input
-                  style={{ height: "50px", position: "absolute", top: "150px" }}
-                  type="text"
-                  placeholder="Search..."
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                    setTerm(e.target.value);
-                  }}
-                />
-                <img
-                  src={require("../../images/loupe.png")}
-                  alt=""
-                  style={{
-                    width: "30px",
-                    height: "30px",
-                    position: "absolute",
-                    top: "170px",
-                    right: "125px",
-                  }}
-                />
-                <div
-                  className="close-btn-signup"
-                  onClick={() => {
-                    setAddMeal("");
-                  }}
-                >
-                  <div className="close-btn-signup-line-one"></div>
-                  <div className="close-btn-signup-line-two"></div>
-                </div>
-                {search != "" && foods != null
-                  ? foods.filter(searchingFor(term)).map((data) => (
-                      <div
-                        key={data.idfoods}
-                        style={{
-                          position: "absolute",
-                          top: 225 + counter + "px",
-                        }}
-                      >
-                        <h1
-                          style={{
-                            position: "absolute",
-                            zIndex: -1,
-                            opacity: 0,
-                          }}
-                        >
-                          {(counter += 50)}
-                        </h1>
-                        <h1 style={{ fontWeight: 400 }}>{data.name}</h1>
-                        <img
-                          src={require("../../images/add.png")}
-                          alt=""
-                          style={{
-                            width: "40px",
-                            height: "40px",
-                            position: "absolute",
-                            top: "7.5px",
-                            right: "-50px",
-                          }}
-                          onClick={() => setAddFood(data.food)}
-                        />
-                      </div>
-                    ))
-                  : null}
-              </div>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
+        {addMeal === "Breakfast" ? searchBar() : <></>}
       </>
     );
   };
