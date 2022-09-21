@@ -214,4 +214,14 @@ app.post("/updatePoints", (req, res) => {
   );
 });
 
+app.get("/foods", (req, res) => {
+  db.query("SELECT * FROM foods", (err, result) => {
+    // omfg "SELCET" !== "SELECT"
+    if (err) {
+      res.send({ err: err });
+    }
+    res.send({ foods: result });
+  });
+});
+
 app.listen(5000, () => console.log(`Server listening on port 5000...`));
