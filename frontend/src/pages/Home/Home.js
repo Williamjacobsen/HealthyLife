@@ -36,6 +36,11 @@ function Home() {
   const [Snacks, setSnacks] = useState([]);
   const [search, setSearch] = useState("");
 
+  const [showBreakfast, setShowBreakfast] = useState(false);
+  const [showLunch, setShowLunch] = useState(false);
+  const [showDinner, setShowDinner] = useState(false);
+  const [showSnacks, setShowSnacks] = useState(false);
+
   const [foods, setFoods] = useState(null);
 
   const handleNavbarBtn = (handleNavbarBtn) => {
@@ -242,12 +247,16 @@ function Home() {
                     onClick={() => {
                       if (meal === "Breakfast") {
                         setBreakfast((prev) => [...prev, data.name]);
+                        setShowBreakfast(true);
                       } else if (meal === "Lunch") {
                         setLunch((prev) => [...prev, data.name]);
+                        setShowLunch(true);
                       } else if (meal === "Dinner") {
                         setDinner((prev) => [...prev, data.name]);
+                        setShowDinner(true);
                       } else if (meal === "Snacks") {
                         setSnacks((prev) => [...prev, data.name]);
+                        setShowSnacks(true);
                       }
                     }}
                   />
@@ -286,19 +295,19 @@ function Home() {
   const subFoodsAdded = (meal) => {
     return (
       <>
-        {meal === "Breakfast"
+        {meal === "Breakfast" && showBreakfast
           ? Breakfast.map((item, index) => (
               <div key={index}>{superSubFoodsAdded(item)}</div>
             ))
-          : meal === "Lunch"
+          : meal === "Lunch" && showLunch
           ? Lunch.map((item, index) => (
               <div key={index}>{superSubFoodsAdded(item)}</div>
             ))
-          : meal === "Dinner"
+          : meal === "Dinner" && showDinner
           ? Dinner.map((item, index) => (
               <div key={index}>{superSubFoodsAdded(item)}</div>
             ))
-          : meal === "Snacks"
+          : meal === "Snacks" && showSnacks
           ? Snacks.map((item, index) => (
               <div key={index}>{superSubFoodsAdded(item)}</div>
             ))
@@ -308,10 +317,28 @@ function Home() {
   };
 
   const mealFoodsArea = (meal, pos, center) => {
+    if (!showBreakfast && meal !== "Breakfast") {
+      pos = pos - Breakfast.length * 40;
+    }
+    if (!showLunch && meal !== "Lunch" && meal !== "Breakfast") {
+      pos = pos - (Breakfast.length + Lunch.length) * 40 + 80;
+    }
+    if (
+      !showDinner &&
+      meal !== "Dinner" &&
+      meal !== "Lunch" &&
+      meal !== "Breakfast"
+    ) {
+      pos = pos - (Breakfast.length + Lunch.length + Dinner.length) * 40 + 150;
+    }
+
     return (
       <div
         className="CalorieTracker-foods-wrapper"
-        style={{ marginTop: pos + "px", marginLeft: center + "px" }}
+        style={{
+          marginTop: pos + "px",
+          marginLeft: center + "px",
+        }}
       >
         <div className="CalorieTracker-foods-breakfast">
           <h4 className="CalorieTracker-foods-meal-title">{meal}</h4>
@@ -319,6 +346,18 @@ function Home() {
             className="CalorieTracker-foods-title-dropdown"
             src={require("../../images/dropdown.png")}
             alt=""
+            style={{ opacity: 0.75 }}
+            onClick={() => {
+              if (meal === "Breakfast") {
+                setShowBreakfast(!showBreakfast);
+              } else if (meal === "Lunch") {
+                setShowLunch(!showLunch);
+              } else if (meal === "Dinner") {
+                setShowDinner(!showDinner);
+              } else if (meal === "Snacks") {
+                setShowSnacks(!showSnacks);
+              }
+            }}
           />
           <img
             className="CalorieTracker-foods-title-add"
@@ -378,12 +417,12 @@ function Home() {
               {mealFoodsArea(
                 "Dinner",
                 (Breakfast.length + Lunch.length) * 40 + 100,
-                -35
+                -30
               )}
               {mealFoodsArea(
                 "Snacks",
                 (Breakfast.length + Lunch.length + Dinner.length) * 40 + 150,
-                -35
+                -30
               )}
             </div>
           </>
