@@ -294,6 +294,14 @@ function Home() {
           ? Lunch.map((item, index) => (
               <div key={index}>{superSubFoodsAdded(item)}</div>
             ))
+          : meal === "Dinner"
+          ? Dinner.map((item, index) => (
+              <div key={index}>{superSubFoodsAdded(item)}</div>
+            ))
+          : meal === "Snacks"
+          ? Snacks.map((item, index) => (
+              <div key={index}>{superSubFoodsAdded(item)}</div>
+            ))
           : null}
       </>
     );
@@ -366,7 +374,17 @@ function Home() {
               <h4 className="CalorieTracker-foods-title">Your Foods</h4>
               <img src={require("../../images/info.png")} alt="" />
               {mealFoodsArea("Breakfast", 0, 0)}
-              {mealFoodsArea("Lunch", Breakfast.length * 40 + 50, -35)}
+              {mealFoodsArea("Lunch", Breakfast.length * 40 + 50, -40)}
+              {mealFoodsArea(
+                "Dinner",
+                (Breakfast.length + Lunch.length) * 40 + 100,
+                -35
+              )}
+              {mealFoodsArea(
+                "Snacks",
+                (Breakfast.length + Lunch.length + Dinner.length) * 40 + 150,
+                -35
+              )}
             </div>
           </>
         ) : null}
@@ -374,6 +392,10 @@ function Home() {
           ? searchBar("Breakfast")
           : addMeal === "Lunch"
           ? searchBar("Lunch")
+          : addMeal === "Dinner"
+          ? searchBar("Dinner")
+          : addMeal === "Snacks"
+          ? searchBar("Snacks")
           : null}
       </>
     );
