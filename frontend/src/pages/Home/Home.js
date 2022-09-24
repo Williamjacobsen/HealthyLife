@@ -315,6 +315,7 @@ function Home() {
             position: "relative",
             left: "0px",
             width: "90%",
+            backgroundColor: "#36622B90",
           }}
         ></div>
       </div>
