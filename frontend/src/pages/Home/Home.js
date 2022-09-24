@@ -317,17 +317,19 @@ function Home() {
   };
 
   const mealFoodsArea = (meal, pos, center) => {
-    if (!showBreakfast && meal !== "Breakfast") {
+    if (!showBreakfast && meal !== "Breakfast" && Breakfast.length != 0) {
       pos = pos - Breakfast.length * 40;
     }
-    if (!showLunch && meal !== "Lunch" && meal !== "Breakfast") {
+    if (Breakfast.length === 0 && Lunch.length === 0 && Dinner.length === 0) {
+    } else if (!showLunch && meal !== "Lunch" && meal !== "Breakfast") {
       pos = pos - (Breakfast.length + Lunch.length) * 40 + 80;
     }
     if (
       !showDinner &&
       meal !== "Dinner" &&
       meal !== "Lunch" &&
-      meal !== "Breakfast"
+      meal !== "Breakfast" &&
+      Dinner.length != 0
     ) {
       pos = pos - (Breakfast.length + Lunch.length + Dinner.length) * 40 + 150;
     }
