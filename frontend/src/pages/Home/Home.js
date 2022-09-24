@@ -104,6 +104,13 @@ function Home() {
     }
   }, [Breakfast]);
 
+  useEffect(() => {
+    setShowBreakfast(false);
+    setShowLunch(false);
+    setShowDinner(false);
+    setShowSnacks(false);
+  }, []);
+
   const sidebarTabs = (title, active, id) => {
     return (
       <>
@@ -317,21 +324,21 @@ function Home() {
   };
 
   const mealFoodsArea = (meal, pos, center) => {
-    if (!showBreakfast && meal !== "Breakfast" && Breakfast.length != 0) {
+    if (!showBreakfast && meal !== "Breakfast") {
       pos = pos - Breakfast.length * 40;
     }
-    if (Breakfast.length === 0 && Lunch.length === 0 && Dinner.length === 0) {
-    } else if (!showLunch && meal !== "Lunch" && meal !== "Breakfast") {
-      pos = pos - (Breakfast.length + Lunch.length) * 40 + 80;
+
+    if (!showLunch && meal !== "Lunch" && meal !== "Breakfast") {
+      pos = pos - Lunch.length * 40;
     }
+
     if (
       !showDinner &&
       meal !== "Dinner" &&
       meal !== "Lunch" &&
-      meal !== "Breakfast" &&
-      Dinner.length != 0
+      meal !== "Breakfast"
     ) {
-      pos = pos - (Breakfast.length + Lunch.length + Dinner.length) * 40 + 150;
+      pos = pos - Dinner.length * 40;
     }
 
     return (
