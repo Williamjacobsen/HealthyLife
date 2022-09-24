@@ -275,7 +275,7 @@ function Home() {
     );
   };
 
-  const superSubFoodsAdded = (food) => {
+  const superSubFoodsAdded = (food, index) => {
     return (
       <div>
         <h6
@@ -287,6 +287,28 @@ function Home() {
         >
           {food}
         </h6>
+        <img
+          src={require("../../images/diet-plan.png")}
+          style={{
+            position: "absolute",
+            top: index * 40 + -45 + "px",
+            left: "200px",
+            width: "30px",
+            height: "30px",
+          }}
+        ></img>
+        <div
+          style={{
+            position: "relative",
+            left: "240px",
+            bottom: "10px",
+            backgroundColor: "black",
+            height: "3px",
+            width: "20px",
+            borderRadius: "5px",
+            opacity: 0.7,
+          }}
+        ></div>
         <div
           className="CalorieTracker-foods-title-underline"
           style={{
@@ -304,19 +326,19 @@ function Home() {
       <>
         {meal === "Breakfast" && showBreakfast
           ? Breakfast.map((item, index) => (
-              <div key={index}>{superSubFoodsAdded(item)}</div>
+              <div key={index}>{superSubFoodsAdded(item, index)}</div>
             ))
           : meal === "Lunch" && showLunch
           ? Lunch.map((item, index) => (
-              <div key={index}>{superSubFoodsAdded(item)}</div>
+              <div key={index}>{superSubFoodsAdded(item, index)}</div>
             ))
           : meal === "Dinner" && showDinner
           ? Dinner.map((item, index) => (
-              <div key={index}>{superSubFoodsAdded(item)}</div>
+              <div key={index}>{superSubFoodsAdded(item, index)}</div>
             ))
           : meal === "Snacks" && showSnacks
           ? Snacks.map((item, index) => (
-              <div key={index}>{superSubFoodsAdded(item)}</div>
+              <div key={index}>{superSubFoodsAdded(item, index)}</div>
             ))
           : null}
       </>
