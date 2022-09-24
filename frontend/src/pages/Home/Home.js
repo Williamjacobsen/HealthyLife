@@ -174,7 +174,7 @@ function Home() {
     };
   }
 
-  const searchBar = () => {
+  const searchBar = (meal) => {
     var counter = 0;
     return (
       <div className="CalorieTracker-add-foods-container">
@@ -239,7 +239,17 @@ function Home() {
                       top: "7.5px",
                       right: "-50px",
                     }}
-                    onClick={() => setBreakfast((prev) => [...prev, data.name])}
+                    onClick={() => {
+                      if (meal === "Breakfast") {
+                        setBreakfast((prev) => [...prev, data.name]);
+                      } else if (meal === "Lunch") {
+                        setLunch((prev) => [...prev, data.name]);
+                      } else if (meal === "Dinner") {
+                        setDinner((prev) => [...prev, data.name]);
+                      } else if (meal === "Snacks") {
+                        setSnacks((prev) => [...prev, data.name]);
+                      }
+                    }}
                   />
                 </div>
               ))
@@ -360,7 +370,11 @@ function Home() {
             </div>
           </>
         ) : null}
-        {addMeal !== "" ? searchBar() : <></>}
+        {addMeal === "Breakfast"
+          ? searchBar("Breakfast")
+          : addMeal === "Lunch"
+          ? searchBar("Lunch")
+          : null}
       </>
     );
   };
