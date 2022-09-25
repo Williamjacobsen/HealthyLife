@@ -249,6 +249,14 @@ function Home() {
                     }}
                     onClick={() => {
                       if (meal === "Breakfast") {
+                        if (localStorage.getItem("food") !== null) {
+                          localStorage.setItem(
+                            "food",
+                            localStorage.getItem("food") + JSON.stringify(data)
+                          );
+                        } else {
+                          localStorage.setItem("food", JSON.stringify(data))
+                        }
                         setBreakfast((prev) => [...prev, data.name]);
                         setShowBreakfast(true);
                       } else if (meal === "Lunch") {
