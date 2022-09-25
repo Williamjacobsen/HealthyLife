@@ -41,6 +41,7 @@ function Home() {
   const [showDinner, setShowDinner] = useState(false);
   const [showSnacks, setShowSnacks] = useState(false);
 
+  const [showFoodInfo, setShowFoodInfo] = useState(null);
   const [foods, setFoods] = useState(null);
 
   const handleNavbarBtn = (handleNavbarBtn) => {
@@ -48,7 +49,8 @@ function Home() {
   };
 
   useEffect(() => {
-    if (username !== null && password !== null) {
+    // remove false
+    if (username !== null && password !== null && false) {
       console.log(
         "Account: " +
           username +
@@ -269,6 +271,22 @@ function Home() {
     );
   };
 
+  const foodInfo = (food) => {
+    return (
+      <div>
+        {foods.map((item, index) =>
+          item.name === food
+            ? Object.entries(item).map(([key, val]) => (
+                <h2 key={key} style={{ fontSize: "50px" }}>
+                  {key}: {val}
+                </h2>
+              ))
+            : null
+        )}
+      </div>
+    );
+  };
+
   const superSubFoodsAdded = (food, index, meal) => {
     return (
       <div>
@@ -289,6 +307,9 @@ function Home() {
             left: "200px",
             width: "30px",
             height: "30px",
+          }}
+          onClick={() => {
+            setShowFoodInfo(food);
           }}
         ></img>
         <div
@@ -480,6 +501,7 @@ function Home() {
           : addMeal === "Snacks"
           ? searchBar("Snacks")
           : null}
+        {showFoodInfo !== null ? foodInfo(showFoodInfo) : null}
       </>
     );
   };
