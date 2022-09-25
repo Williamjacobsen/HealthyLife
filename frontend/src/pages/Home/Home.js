@@ -273,16 +273,79 @@ function Home() {
 
   const foodInfo = (food) => {
     return (
-      <div>
-        {foods.map((item, index) =>
-          item.name === food
-            ? Object.entries(item).map(([key, val]) => (
-                <h2 key={key} style={{ fontSize: "50px" }}>
-                  {key}: {val}
-                </h2>
-              ))
-            : null
-        )}
+      <div
+        style={{
+          position: "fixed",
+          width: "100%",
+          height: "100%",
+          backgroundColor: "#00000050",
+        }}
+      >
+        <div
+          style={{
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)", // transform !== transfrom
+            backgroundColor: "#C6E377",
+            boxShadow: "0px 5px 15px 0px rgba(0, 0, 0, 0.5)",
+            padding: "50px",
+            borderRadius: "20px",
+          }}
+        >
+          <h4
+            style={{
+              fontSize: "20px",
+            }}
+          >
+            Food: {food}
+          </h4>
+          <div
+            className="CalorieTracker-foods-title-underline"
+            style={{
+              position: "relative",
+              left: "0px",
+              width: "100%",
+              backgroundColor: "#36622B90",
+            }}
+          ></div>
+          {foods.map((item, index) =>
+            item.name === food
+              ? Object.entries(item).map(([key, val]) =>
+                  key != "idfoods" && key != "name" ? (
+                    <h2 key={key} style={{ fontWeight: "400" }}>
+                      {key}: {val}
+                    </h2>
+                  ) : null
+                )
+              : null
+          )}
+          <div
+            className="close-btn-signup"
+            onClick={() => {
+              setShowFoodInfo(null);
+            }}
+          >
+            <div
+              className="close-btn-signup-line-one"
+              style={{
+                width: "40px",
+                height: "5px",
+                position: "absolute",
+                top: "20px",
+              }}
+            ></div>
+            <div
+              className="close-btn-signup-line-two"
+              style={{
+                width: "40px",
+                height: "5px",
+                position: "absolute",
+                top: "20px",
+              }}
+            ></div>
+          </div>
+        </div>
       </div>
     );
   };
