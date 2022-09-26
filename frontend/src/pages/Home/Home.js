@@ -428,8 +428,11 @@ function Home() {
               .split("}");
             cookie = cookie.slice(0, -1);
             for (let i = 0; i < cookie.length; i++) {
-              cookie[i] = cookie[0].toString().split(",");
+              cookie[i] = cookie[i].toString().split(",");
             }
+            cookie = cookie.toString().replaceAll(":", ",");
+            cookie = cookie.toString().split(",");
+            // make it an object
             console.log(cookie);
           }}
         >
