@@ -420,6 +420,17 @@ function Home() {
                 ...prev.slice(index + 1, prev.length),
               ]);
             }
+            let cookie = localStorage.getItem(meal); // the art of formatting cookies lmao... plz kill me
+            cookie = cookie
+              .toString()
+              .replaceAll('"', "")
+              .replaceAll("{", "")
+              .split("}");
+            cookie = cookie.slice(0, -1);
+            for (let i = 0; i < cookie.length; i++) {
+              cookie[i] = cookie[0].toString().split(",");
+            }
+            console.log(cookie);
           }}
         >
           <div
