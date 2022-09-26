@@ -249,14 +249,6 @@ function Home() {
                     }}
                     onClick={() => {
                       if (meal === "Breakfast") {
-                        if (localStorage.getItem("food") !== null) {
-                          localStorage.setItem(
-                            "food",
-                            localStorage.getItem("food") + JSON.stringify(data)
-                          );
-                        } else {
-                          localStorage.setItem("food", JSON.stringify(data))
-                        }
                         setBreakfast((prev) => [...prev, data.name]);
                         setShowBreakfast(true);
                       } else if (meal === "Lunch") {
@@ -268,6 +260,14 @@ function Home() {
                       } else if (meal === "Snacks") {
                         setSnacks((prev) => [...prev, data.name]);
                         setShowSnacks(true);
+                      }
+                      if (localStorage.getItem(meal) !== null) {
+                        localStorage.setItem(
+                          meal,
+                          localStorage.getItem(meal) + JSON.stringify(data)
+                        );
+                      } else {
+                        localStorage.setItem(meal, JSON.stringify(data));
                       }
                     }}
                   />
@@ -330,6 +330,10 @@ function Home() {
           )}
           <div
             className="close-btn-signup"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
             onClick={() => {
               setShowFoodInfo(null);
             }}
@@ -397,6 +401,21 @@ function Home() {
           onClick={() => {
             if (meal === "Breakfast") {
               setBreakfast((prev) => [
+                ...prev.slice(0, index),
+                ...prev.slice(index + 1, prev.length),
+              ]);
+            } else if (meal === "Lunch") {
+              setLunch((prev) => [
+                ...prev.slice(0, index),
+                ...prev.slice(index + 1, prev.length),
+              ]);
+            } else if (meal === "Dinner") {
+              setDinner((prev) => [
+                ...prev.slice(0, index),
+                ...prev.slice(index + 1, prev.length),
+              ]);
+            } else if (meal === "Snacks") {
+              setSnacks((prev) => [
                 ...prev.slice(0, index),
                 ...prev.slice(index + 1, prev.length),
               ]);
