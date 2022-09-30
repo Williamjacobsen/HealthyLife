@@ -264,7 +264,9 @@ function Home() {
                       if (localStorage.getItem(meal) !== null) {
                         localStorage.setItem(
                           meal,
-                          localStorage.getItem(meal) + JSON.stringify(data)
+                          localStorage.getItem(meal) +
+                            "," +
+                            JSON.stringify(data)
                         );
                       } else {
                         localStorage.setItem(meal, JSON.stringify(data));
@@ -401,8 +403,16 @@ function Home() {
           onClick={() => {
             let cookie = localStorage.getItem(meal);
             try {
+              cookie = cookie
+                .toString()
+                .replaceAll("[", "")
+                .replaceAll("]", "");
+              cookie = "[" + cookie + "]";
               cookie = JSON.parse(cookie);
+              console.log(cookie);
             } catch (e) {
+              console.log(e);
+              /*
               cookie = cookie.toString();
               cookie = cookie.split("}");
               for (let i = 0; i < cookie.length; i++) {
@@ -411,7 +421,7 @@ function Home() {
               cookie = cookie.slice(0, -1);
               for (let i = 0; i < cookie.length; i++) {
                 cookie[i] = JSON.parse(cookie[i]);
-              }
+              }*/
             }
             // omfg i've had a bug for 4 hours but i solved it when i went to take a shit
             // plz kill me
@@ -420,7 +430,9 @@ function Home() {
                 ...prev.slice(0, index),
                 ...prev.slice(index + 1, prev.length),
               ]);
-              //localStorage.setItem("Breakfast", cookie);
+              if (cookie != null) {
+                localStorage.setItem("Breakfast", JSON.stringify(cookie));
+              }
             } else if (meal === "Lunch") {
               setLunch((prev) => [
                 ...prev.slice(0, index),
