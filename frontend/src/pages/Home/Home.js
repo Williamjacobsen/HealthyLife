@@ -261,7 +261,6 @@ function Home() {
                         setSnacks((prev) => [...prev, data.name]);
                         setShowSnacks(true);
                       }
-                      // make local cook to arr, get arr, push obj into arr, set local cook
                       if (localStorage.getItem(meal) !== null) {
                         localStorage.setItem(
                           meal,
@@ -400,43 +399,28 @@ function Home() {
             padding: "15px",
           }}
           onClick={() => {
-            let cookie = JSON.parse(localStorage.getItem(meal)); // the art of formatting cookies lmao... plz kill me
+            let cookie = localStorage.getItem(meal);
+            try {
+              cookie = JSON.parse(cookie);
+            } catch (e) {
+              cookie = cookie.toString();
+              cookie = cookie.split("}");
+              for (let i = 0; i < cookie.length; i++) {
+                cookie[i] += "}";
+              }
+              cookie = cookie.slice(0, -1);
+              for (let i = 0; i < cookie.length; i++) {
+                cookie[i] = JSON.parse(cookie[i]);
+              }
+            }
             // omfg i've had a bug for 4 hours but i solved it when i went to take a shit
             // plz kill me
-            console.log(cookie);
-            /*cookie = cookie
-              .toString()
-              .replaceAll('"', "")
-              .replaceAll("{", "")
-              .split("}");
-            cookie = cookie.slice(0, -1);
-            for (let i = 0; i < cookie.length; i++) {
-              cookie[i] = cookie[i].toString().split(",");
-            }
-            cookie = cookie.toString().replaceAll(":", ",");
-            cookie = cookie.toString().split(",");
-            let cookieArr = [];
-            for (let i = 0; i < cookie.length; i += 20) {
-              cookieArr.push(cookie.slice(i, i + 20));
-            }
-            console.log("cookieArr:");
-            console.log(cookieArr);
-            let cookieObjStr = "";
-            for (let i = 0; i < cookieArr.length; i++) {
-              cookieObjStr += "{";
-              for (let j = 0; j < cookieArr[i].length; j += 2) {
-                cookieObjStr += `"${cookieArr[i][j]}":${cookieArr[i][j + 1]},`; // "${cookieArr[i][j + 1]}"
-              }
-              cookieObjStr = cookieObjStr.slice(0, -1);
-              cookieObjStr += "}";
-            }
-            console.log(cookieObjStr);*/
             if (meal === "Breakfast") {
               setBreakfast((prev) => [
                 ...prev.slice(0, index),
                 ...prev.slice(index + 1, prev.length),
               ]);
-              //localStorage.setItem("Breakfast", cookieObjStr);
+              //localStorage.setItem("Breakfast", cookie);
             } else if (meal === "Lunch") {
               setLunch((prev) => [
                 ...prev.slice(0, index),
