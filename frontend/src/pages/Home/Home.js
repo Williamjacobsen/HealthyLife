@@ -432,8 +432,11 @@ function Home() {
             }
             cookie = cookie.toString().replaceAll(":", ",");
             cookie = cookie.toString().split(",");
-            // make it an object
-            console.log(cookie);
+            let cookieArr = [];
+            for (let i = 0; i < cookie.length; i += 20) {
+              cookieArr.push(cookie.slice(i - 20, i));
+            }
+            cookieArr.slice(0, 1);
           }}
         >
           <div
