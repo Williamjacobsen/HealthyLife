@@ -107,6 +107,25 @@ function Home() {
     setShowSnacks(false);
   }, []);
 
+  useEffect(() => {
+    let localStorageCookies = JSON.parse(localStorage.getItem("Breakfast"));
+    //localStorage.setItem("Breakfast", JSON.stringify(localStorageCookies))
+    let localStorageCookiesNames = [];
+    try {
+      localStorageCookies.forEach((cookie) => {
+        localStorageCookiesNames.push(cookie.name);
+      });
+    } catch (e) {
+      console.log(`NO COOKIES...\n${e}`);
+    }
+    console.log(localStorageCookiesNames);
+    setBreakfast(localStorageCookiesNames);
+  }, []);
+
+  useEffect(() => {
+    console.log(Breakfast);
+  }, [Breakfast]);
+
   const sidebarTabs = (title, active, id) => {
     return (
       <>
@@ -263,7 +282,6 @@ function Home() {
                       }
                       if (localStorage.getItem(meal) !== null) {
                         let iWannaDie = localStorage.getItem(meal).toString();
-                        console.log(iWannaDie);
                         iWannaDie = iWannaDie.replaceAll("]", "");
                         localStorage.setItem(meal, iWannaDie);
                         localStorage.setItem(
@@ -417,7 +435,6 @@ function Home() {
                 .replaceAll("]", "");
               cookie = "[" + cookie + "]";
               cookie = JSON.parse(cookie);
-              console.log(cookie);
             } catch (e) {
               console.log(e);
               /*
