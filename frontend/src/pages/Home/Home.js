@@ -118,13 +118,8 @@ function Home() {
     } catch (e) {
       console.log(`NO COOKIES...\n${e}`);
     }
-    console.log(localStorageCookiesNames);
     setBreakfast(localStorageCookiesNames);
   }, []);
-
-  useEffect(() => {
-    console.log(Breakfast);
-  }, [Breakfast]);
 
   const sidebarTabs = (title, active, id) => {
     return (
@@ -428,27 +423,12 @@ function Home() {
           }}
           onClick={() => {
             let cookie = localStorage.getItem(meal);
-            try {
-              cookie = cookie
-                .toString()
-                .replaceAll("[", "")
-                .replaceAll("]", "");
-              cookie = "[" + cookie + "]";
-              cookie = JSON.parse(cookie);
-            } catch (e) {
-              console.log(e);
-              /*
-              cookie = cookie.toString();
-              cookie = cookie.split("}");
-              for (let i = 0; i < cookie.length; i++) {
-                cookie[i] += "}";
-              }
-              cookie = cookie.slice(0, -1);
-              for (let i = 0; i < cookie.length; i++) {
-                cookie[i] = JSON.parse(cookie[i]);
-              }*/
-            }
-            // omfg i've had a bug for 4 hours but i solved it when i went to take a shit
+            cookie = JSON.parse(cookie);
+            let a = cookie.slice(0, index);
+            let b = cookie.slice(index + 1, cookie.length);
+            cookie = JSON.stringify(a) + JSON.stringify(b);
+            // error when removing el happens when only one left
+            cookie = cookie.replaceAll("][", ",");
             // plz kill me
             if (meal === "Breakfast") {
               setBreakfast((prev) => [
@@ -456,7 +436,7 @@ function Home() {
                 ...prev.slice(index + 1, prev.length),
               ]);
               if (cookie != null) {
-                localStorage.setItem("Breakfast", JSON.stringify(cookie));
+                localStorage.setItem("Breakfast", cookie);
               }
             } else if (meal === "Lunch") {
               setLunch((prev) => [
