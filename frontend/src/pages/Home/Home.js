@@ -262,14 +262,22 @@ function Home() {
                         setShowSnacks(true);
                       }
                       if (localStorage.getItem(meal) !== null) {
+                        let iWannaDie = localStorage.getItem(meal).toString();
+                        console.log(iWannaDie);
+                        iWannaDie = iWannaDie.replaceAll("]", "");
+                        localStorage.setItem(meal, iWannaDie);
                         localStorage.setItem(
                           meal,
                           localStorage.getItem(meal) +
                             "," +
-                            JSON.stringify(data)
+                            JSON.stringify(data) +
+                            "]"
                         );
                       } else {
-                        localStorage.setItem(meal, JSON.stringify(data));
+                        localStorage.setItem(
+                          meal,
+                          "[" + JSON.stringify(data) + "]"
+                        );
                       }
                     }}
                   />
