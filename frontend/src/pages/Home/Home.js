@@ -108,17 +108,28 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    let localStorageCookies = JSON.parse(localStorage.getItem("Breakfast"));
-    //localStorage.setItem("Breakfast", JSON.stringify(localStorageCookies))
-    let localStorageCookiesNames = [];
-    try {
-      localStorageCookies.forEach((cookie) => {
-        localStorageCookiesNames.push(cookie.name);
-      });
-    } catch (e) {
-      console.log(`NO COOKIES...\n${e}`);
+    const allCookies = ["Breakfast", "Lunch", "Dinner", "Snacks"];
+    for (let i = 0; i < allCookies.length; i++) {
+      let localStorageCookies = JSON.parse(localStorage.getItem(allCookies[i]));
+      //localStorage.setItem("Breakfast", JSON.stringify(localStorageCookies))
+      let localStorageCookiesNames = [];
+      try {
+        localStorageCookies.forEach((cookie) => {
+          localStorageCookiesNames.push(cookie.name);
+        });
+      } catch (e) {
+        console.log(`NO COOKIES...\n${e}`);
+      }
+      if (allCookies[i] == allCookies[0]) {
+        setBreakfast(localStorageCookiesNames);
+      } else if (allCookies[i] == allCookies[1]) {
+        setLunch(localStorageCookiesNames);
+      } else if (allCookies[i] == allCookies[2]) {
+        setDinner(localStorageCookiesNames);
+      } else if (allCookies[i] == allCookies[3]) {
+        setSnacks(localStorageCookiesNames);
+      }
     }
-    setBreakfast(localStorageCookiesNames);
   }, []);
 
   const sidebarTabs = (title, active, id) => {
@@ -276,7 +287,7 @@ function Home() {
                         setShowSnacks(true);
                       }
                       if (localStorage.getItem(meal) !== null) {
-                        let iWannaDie = localStorage.getItem(meal).toString();
+                        let iWannaDie = localStorage.getItem(meal);
                         iWannaDie = iWannaDie.replaceAll("]", "");
                         localStorage.setItem(meal, iWannaDie);
                         localStorage.setItem(
@@ -286,6 +297,14 @@ function Home() {
                             JSON.stringify(data) +
                             "]"
                         );
+                        let cookie = localStorage.getItem(meal);
+                        if (cookie[1] == ",") {
+                          cookie = cookie.replace(",", "");
+                        }
+                        if (cookie[cookie.length - 2] == ",") {
+                          cookie = cookie.substring(0, cookie.length - 2) + "]";
+                        }
+                        localStorage.setItem(meal, cookie);
                       } else {
                         localStorage.setItem(
                           meal,
@@ -423,12 +442,24 @@ function Home() {
           }}
           onClick={() => {
             let cookie = localStorage.getItem(meal);
+            if (cookie[1] == ",") {
+              cookie = cookie.replace(",", "");
+            }
+            if (cookie[cookie.length - 2] == ",") {
+              cookie = cookie.substring(0, cookie.length - 2) + "]";
+            }
             cookie = JSON.parse(cookie);
             let a = cookie.slice(0, index);
             let b = cookie.slice(index + 1, cookie.length);
             cookie = JSON.stringify(a) + JSON.stringify(b);
             // error when removing el happens when only one left
             cookie = cookie.replaceAll("][", ",");
+            if (cookie[1] == ",") {
+              cookie = cookie.replace(",", "");
+            }
+            if (cookie[cookie.length - 2] == ",") {
+              cookie = cookie.substring(0, cookie.length - 2) + "]";
+            }
             // plz kill me
             if (meal === "Breakfast") {
               setBreakfast((prev) => [
@@ -443,16 +474,25 @@ function Home() {
                 ...prev.slice(0, index),
                 ...prev.slice(index + 1, prev.length),
               ]);
+              if (cookie != null) {
+                localStorage.setItem("Lunch", cookie);
+              }
             } else if (meal === "Dinner") {
               setDinner((prev) => [
                 ...prev.slice(0, index),
                 ...prev.slice(index + 1, prev.length),
               ]);
+              if (cookie != null) {
+                localStorage.setItem("Dinner", cookie);
+              }
             } else if (meal === "Snacks") {
               setSnacks((prev) => [
                 ...prev.slice(0, index),
                 ...prev.slice(index + 1, prev.length),
               ]);
+              if (cookie != null) {
+                localStorage.setItem("Snacks", cookie);
+              }
             }
           }}
         >
