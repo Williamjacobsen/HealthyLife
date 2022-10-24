@@ -132,6 +132,46 @@ function Home() {
     }
   }, []);
 
+  const mainStatistics = () => {
+    return (
+      <>
+        <div
+          style={{
+            position: "fixed",
+            top: "35%",
+            paddingBottom: "-10px",
+            backgroundColor: "rgba(251, 250, 211, 0.75)",
+            left: "65%",
+            width: "500px",
+            height: "300px",
+            boxShadow: "0px 5px 15px 0px rgb(0 0 0 / 25%)",
+            borderRadius: "20px",
+            display: "flex",
+            justifyContent: "center",
+            padding: "20px",
+          }}
+        >
+          <h4 style={{ fontSize: "22px", fontWeight: "500" }}>
+            Daily Statistics
+          </h4>
+          <div>
+            <div
+              style={{
+                height: "120px",
+                width: "120px",
+                borderRadius: "50%",
+                backgroundColor: "red",
+                position: "absolute",
+                marginTop: "50px",
+                marginLeft: "-275px",
+              }}
+            ></div>
+          </div>
+        </div>
+      </>
+    );
+  };
+
   const sidebarTabs = (title, active, id) => {
     return (
       <>
@@ -654,6 +694,7 @@ function Home() {
                 -30
               )}
             </div>
+            {mainStatistics()}
           </>
         ) : null}
         {addMeal === "Breakfast"
