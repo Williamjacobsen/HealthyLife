@@ -25,9 +25,15 @@ function Home() {
 
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
-  const [calories, setCaloires] = useState("");
+  const [calories, setCalories] = useState("");
   const [goal, setGoal] = useState(0);
   const [points, setPoints] = useState(0);
+
+  const [curCalories, setCurCalories] = useState(0);
+  const [curCarbs, setCurCarbs] = useState(0);
+  const [curProtein, setCurProtein] = useState(0);
+  const [curFats, setCurFats] = useState(0);
+  const [curCaloriesProcent, setCurCaloriesProcent] = useState(0);
 
   const [addMeal, setAddMeal] = useState("");
   const [Breakfast, setBreakfast] = useState([]);
@@ -70,7 +76,7 @@ function Home() {
     Axios.get("http://localhost:5000/LogInGet").then((response) => {
       setUsername(response.data.user[0].username);
       setPassword(response.data.user[0].password);
-      setCaloires(response.data.user[0].calories);
+      setCalories(response.data.user[0].calories);
       setGoal(response.data.user[0].goal);
       setPoints(response.data.user[0].points);
     });
@@ -105,6 +111,7 @@ function Home() {
     setShowLunch(false);
     setShowDinner(false);
     setShowSnacks(false);
+    checkCalories();
   }, []);
 
   useEffect(() => {
@@ -132,7 +139,43 @@ function Home() {
     }
   }, []);
 
+  const checkCalories = () => {
+    let curCaloriesTmp = 0;
+    let curProteinTmp = 0;
+    let curFatsTmp = 0;
+    let curCarbsTmp = 0;
+    try {
+      for (let i = 0; i < Breakfast.length; i++) {
+        for (let food = 0; food < foods.length; food++) {
+          if (foods[food].name == Breakfast[i]) {
+            curCaloriesTmp += foods[food].Energi;
+            curProteinTmp += foods[food].Protein;
+            curFatsTmp += foods[food].Fedt;
+            curCarbsTmp += foods[food].Kulhydrat;
+          }
+        }
+      }
+      setCurCalories(curCaloriesTmp);
+      setCurProtein(curProteinTmp);
+      setCurFats(curFatsTmp);
+      setCurCarbs(curFatsTmp);
+    } catch {}
+  };
+
+  useEffect(() => {
+    checkCalories();
+  }, [Breakfast, Lunch, Dinner, Snacks, foods]);
+
+  useEffect(() => {
+    if (curCalories != 0) {
+      let cal = calories.replace(",", "");
+      cal = (curCalories / cal) * 100;
+      setCurCaloriesProcent(Math.round(cal));
+    }
+  }, [curCalories]);
+
   const mainStatistics = () => {
+    const nutritions = ["Carbs", "Protein", "Fats"];
     return (
       <>
         <div
@@ -155,7 +198,7 @@ function Home() {
             Daily Statistics
           </h4>
           <div>
-            <div
+            <div // total points circle
               style={{
                 height: "120px",
                 width: "120px",
@@ -164,7 +207,7 @@ function Home() {
                 position: "absolute",
                 marginTop: "50px",
                 marginLeft: "-275px",
-                border: "solid #36622b75 5px",
+                border: "solid #36622b25 5px",
                 display: "flex",
                 justifyContent: "center",
               }}
@@ -187,6 +230,135 @@ function Home() {
               >
                 {points}
               </p>
+            </div>
+            <div // progress bar
+              style={{
+                height: "50px",
+                width: "80%",
+                borderRadius: "20px",
+                backgroundColor: "rgb(198, 227, 119)",
+                position: "absolute",
+                marginTop: "200px",
+                marginLeft: "-275px",
+                border: "solid #36622b25 5px",
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <p
+                style={{
+                  position: "absolute",
+                  marginTop: "-5px",
+                  right: "20px",
+                  fontWeight: "500",
+                }}
+              >
+                Calories: {calories}
+              </p>
+              <p
+                style={{
+                  position: "absolute",
+                  marginTop: "-5px",
+                  left: "20px",
+                  fontWeight: "500",
+                }}
+              >
+                Current Calories: {curCalories}
+              </p>
+              <div
+                style={{
+                  height: "100%",
+                  marginLeft: "-10%",
+                  width: curCaloriesProcent + 10 + "%",
+                  borderRadius: "20px",
+                  backgroundColor: "#36622b75",
+                  position: "absolute",
+                }}
+              ></div>
+            </div>
+            <div // nutrition distribution, diagram
+              style={{
+                height: "120px",
+                width: "225px",
+                borderRadius: "20px",
+                backgroundColor: "rgb(198, 227, 119)",
+                position: "absolute",
+                marginTop: "50px",
+                marginLeft: "-100px",
+                border: "solid #36622b25 5px",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <h4
+                style={{
+                  position: "absolute",
+                  fontWeight: "500",
+                }}
+              >
+                Nutrition distribution
+              </h4>
+              <div
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "60%",
+                  bottom: "25px",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                {nutritions.map((nutrition, key) => (
+                  <>
+                    <div /*style={{ transform: "rotate(90deg)" }}*/>
+                      {nutrition == "Carbs"
+                        ? curCarbs
+                        : nutrition == "Protein"
+                        ? curProtein
+                        : nutrition == "Fats"
+                        ? curFats
+                        : null}
+                    </div>
+                    <div
+                      style={{
+                        backgroundColor: "#36622b75",
+                        width: "10px",
+                        marginLeft: "-60px",
+                        height:
+                          nutrition == "Carbs"
+                            ? (curCarbs / (curCarbs + curProtein + curFats)) *
+                                100 +
+                              "%"
+                            : nutrition == "Protein"
+                            ? (curProtein / (curCarbs + curProtein + curFats)) *
+                                100 +
+                              "%"
+                            : (curFats / (curCarbs + curProtein + curFats)) *
+                                100 +
+                              "%",
+                        position: "relative",
+                        bottom: "-65%",
+                        borderRadius: "2px",
+                      }}
+                    ></div>
+                  </>
+                ))}
+              </div>
+              <div
+                style={{
+                  position: "absolute",
+                  width: "100%",
+                  height: "25px",
+                  bottom: "0",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                }}
+              >
+                {nutritions.map((nutrition, key) => (
+                  <div key={key}>{nutrition}</div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
