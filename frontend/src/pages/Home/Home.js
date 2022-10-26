@@ -160,12 +160,34 @@ function Home() {
                 height: "120px",
                 width: "120px",
                 borderRadius: "50%",
-                backgroundColor: "red",
+                backgroundColor: "rgb(198, 227, 119)",
                 position: "absolute",
                 marginTop: "50px",
                 marginLeft: "-275px",
+                border: "solid #36622b75 5px",
+                display: "flex",
+                justifyContent: "center",
               }}
-            ></div>
+            >
+              <h4
+                style={{
+                  position: "absolute",
+                  marginTop: "20px",
+                  fontWeight: "500",
+                }}
+              >
+                Total Points:
+              </h4>
+              <p
+                style={{
+                  position: "absolute",
+                  marginTop: "45px",
+                  fontSize: "18px",
+                }}
+              >
+                {points}
+              </p>
+            </div>
           </div>
         </div>
       </>
