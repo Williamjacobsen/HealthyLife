@@ -8,9 +8,12 @@ function Home() {
   /* eslint-disable */
   Axios.defaults.withCredentials = true;
 
-  const [isDesktop, setDesktop] = useState(window.innerWidth > 1200);
+  const RESOLUTION_CHANGE = 1350;
+  const [isDesktop, setDesktop] = useState(
+    window.innerWidth > RESOLUTION_CHANGE
+  );
   const updateMedia = () => {
-    setDesktop(window.innerWidth > 1200);
+    setDesktop(window.innerWidth > RESOLUTION_CHANGE);
   };
 
   useEffect(() => {
@@ -49,6 +52,8 @@ function Home() {
 
   const [showFoodInfo, setShowFoodInfo] = useState(null);
   const [foods, setFoods] = useState(null);
+
+  const [topUsers, setTopUsers] = useState(null);
 
   const handleNavbarBtn = (handleNavbarBtn) => {
     setNavBarButtonPressed(handleNavbarBtn);
@@ -174,26 +179,18 @@ function Home() {
     }
   }, [curCalories]);
 
+  useEffect(() => {
+    Axios.get("http://localhost:5000/top_users").then((res) => {
+      console.log(res.data.result);
+      setTopUsers(res.data.result);
+    });
+  }, []);
+
   const mainStatistics = () => {
     const nutritions = ["Carbs", "Protein", "Fats"];
     return (
       <>
-        <div
-          style={{
-            position: "fixed",
-            top: "35%",
-            paddingBottom: "-10px",
-            backgroundColor: "rgba(251, 250, 211, 0.75)",
-            left: "65%",
-            width: "500px",
-            height: "300px",
-            boxShadow: "0px 5px 15px 0px rgb(0 0 0 / 25%)",
-            borderRadius: "20px",
-            display: "flex",
-            justifyContent: "center",
-            padding: "20px",
-          }}
-        >
+        <div className="daily-statistics">
           <h4 style={{ fontSize: "22px", fontWeight: "500" }}>
             Daily Statistics
           </h4>
@@ -310,21 +307,54 @@ function Home() {
                 }}
               >
                 {nutritions.map((nutrition, key) => (
-                  <>
-                    <div /*style={{ transform: "rotate(90deg)" }}*/>
+                  <div key={key}>
+                    <div style={{ marginBottom: "-20px" }}>
                       {nutrition == "Carbs"
-                        ? curCarbs
+                        ? ((curCarbs / (curCarbs + curProtein + curFats)) * 100)
+                            .toString()
+                            .slice(
+                              0,
+                              (
+                                (curCarbs / (curCarbs + curProtein + curFats)) *
+                                100
+                              )
+                                .toString()
+                                .indexOf(".")
+                            ) + "%"
                         : nutrition == "Protein"
-                        ? curProtein
+                        ? (
+                            (curProtein / (curCarbs + curProtein + curFats)) *
+                            100
+                          )
+                            .toString()
+                            .slice(
+                              0,
+                              (
+                                (curCarbs / (curCarbs + curProtein + curFats)) *
+                                100
+                              )
+                                .toString()
+                                .indexOf(".")
+                            ) + "%"
                         : nutrition == "Fats"
-                        ? curFats
+                        ? ((curFats / (curCarbs + curProtein + curFats)) * 100)
+                            .toString()
+                            .slice(
+                              0,
+                              (
+                                (curCarbs / (curCarbs + curProtein + curFats)) *
+                                100
+                              )
+                                .toString()
+                                .indexOf(".")
+                            ) + "%"
                         : null}
                     </div>
                     <div
                       style={{
                         backgroundColor: "#36622b75",
                         width: "10px",
-                        marginLeft: "-60px",
+                        marginLeft: "10px",
                         height:
                           nutrition == "Carbs"
                             ? (curCarbs / (curCarbs + curProtein + curFats)) *
@@ -342,7 +372,7 @@ function Home() {
                         borderRadius: "2px",
                       }}
                     ></div>
-                  </>
+                  </div>
                 ))}
               </div>
               <div
@@ -364,6 +394,10 @@ function Home() {
         </div>
       </>
     );
+  };
+
+  const mainTopUsers = () => {
+    return <></>;
   };
 
   const sidebarTabs = (title, active, id) => {
