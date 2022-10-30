@@ -224,4 +224,16 @@ app.get("/foods", (req, res) => {
   });
 });
 
+app.get("/top_users", (req, res) => {
+  db.query(
+    "SELECT * FROM accounts ORDER BY points DESC LIMIT 5",
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      res.send({ result: result });
+    }
+  );
+});
+
 app.listen(5000, () => console.log(`Server listening on port 5000...`));
