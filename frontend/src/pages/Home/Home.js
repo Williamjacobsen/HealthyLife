@@ -91,12 +91,12 @@ function Home() {
     // console.log(navbarTabsPressed);
   }, [navbarTabsPressed]);
 
-  const updatePoints = () => {
+  const updatePoints = (updatedPoints) => {
     if (username !== null && password !== null) {
       Axios.post("http://localhost:5000/updatePoints", {
         username: username,
         password: password,
-        points: points,
+        points: updatedPoints,
       }).then((res) => {
         console.log("updatePoints : ");
         console.log(res);
@@ -187,6 +187,22 @@ function Home() {
       setTopUsers(res.data.result);
     });
   }, []);
+
+  useEffect(() => {
+    if (username !== null && password !== null) {
+      Axios.post("http://localhost:5000/updatePoints", {
+        username: username,
+        password: password,
+        points: points,
+      }).then((res) => {
+        console.log("updatePoints : ");
+        console.log(res);
+        if (points != res.data.points) {
+          setPoints(res.data.points);
+        }
+      });
+    }
+  }, [points]);
 
   const mainStatistics = () => {
     const nutritions = ["Carbs", "Protein", "Fats"];
@@ -605,6 +621,13 @@ function Home() {
                       if (meal === "Breakfast") {
                         setBreakfast((prev) => [...prev, data.name]);
                         setShowBreakfast(true);
+                        updatePoints(
+                          Math.round(
+                            (data.Energi /
+                              parseInt(calories.replace(",", ""))) *
+                              100
+                          ) + points
+                        );
                       } else if (meal === "Lunch") {
                         setLunch((prev) => [...prev, data.name]);
                         setShowLunch(true);
