@@ -413,65 +413,52 @@ function Home() {
         </h4>
         <div
           style={{
+            marginTop: "40px",
             float: "left",
             width: "100%",
             display: "flex",
+            justifyContent: "center",
+            marginLeft: "50px",
+            fontSize: "18px",
+            position: "absolute",
+            fontWeight: "500",
           }}
         >
-          <div
-            style={{ width: "20%", height: "20px", backgroundColor: "red" }}
-          ></div>
-          <div
-            style={{ width: "60%", height: "20px", backgroundColor: "blue" }}
-          ></div>
-          <div
-            style={{ width: "30%", height: "20px", backgroundColor: "green" }}
-          ></div>
+          <div style={{ width: "10%", height: "20px" }}>ID</div>
+          <div style={{ width: "45%", height: "20px" }}>Username</div>
+          <div style={{ width: "20%", height: "20px" }}>Points</div>
+        </div>
+        <div
+          style={{
+            marginTop: "70px",
+            float: "left",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            marginLeft: "50px",
+            fontSize: "18px",
+          }}
+        >
+          <div style={{ width: "15%", height: "20px" }}>
+            {topUsers
+              ? topUsers.map((user, index) => <p key={index}>#{user.id}</p>)
+              : null}
+          </div>
+          <div style={{ width: "60%", height: "20px" }}>
+            {topUsers
+              ? topUsers.map((user, index) => (
+                  <p key={index}>{user.username}</p>
+                ))
+              : null}
+          </div>
+          <div style={{ width: "20%", height: "20px" }}>
+            {topUsers
+              ? topUsers.map((user, index) => <p key={index}>{user.points}</p>)
+              : null}
+          </div>
         </div>
       </div>
     );
-    /*        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "40px",
-            marginLeft: "-50px",
-          }}
-        >
-          <div style={{ position: "absolute", marginTop: "-25px" }}>
-            <p
-              style={{
-                marginTop: "20px",
-                marginLeft: "-30px",
-              }}
-            >
-              id
-            </p>
-            <p style={{ marginTop: "-20px" }}>Username</p>
-            <p style={{ marginTop: "-20px", marginLeft: "250px" }}>Points</p>
-          </div>
-          {topUsers
-            ? topUsers.map((user, index) => (
-                <div
-                  key={index}
-                  style={{ position: "absolute", marginTop: "25px" }}
-                >
-                  <p
-                    style={{
-                      marginTop: index * 20 + "px",
-                      marginLeft: "-30px",
-                    }}
-                  >
-                    #{user.id}
-                  </p>
-                  <p style={{ marginTop: "-20px" }}>{user.username}</p>
-                  <p style={{ marginTop: "-20px", marginLeft: "250px" }}>
-                    {user.points}
-                  </p>
-                </div>
-              ))
-            : null}
-        </div>*/
   };
 
   const sidebarTabs = (title, active, id) => {
