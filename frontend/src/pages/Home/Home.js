@@ -181,7 +181,9 @@ function Home() {
 
   useEffect(() => {
     Axios.get("http://localhost:5000/top_users").then((res) => {
-      console.log(res.data.result);
+      if (res.data.err) {
+        console.err(res.data.err);
+      }
       setTopUsers(res.data.result);
     });
   }, []);
@@ -397,7 +399,79 @@ function Home() {
   };
 
   const mainTopUsers = () => {
-    return <></>;
+    // username, id, points
+    return (
+      <div className="daily-statistics" style={{ top: "67.5%" }}>
+        <h4
+          style={{
+            fontSize: "22px",
+            fontWeight: "500",
+            position: "absolute",
+          }}
+        >
+          Top Users
+        </h4>
+        <div
+          style={{
+            float: "left",
+            width: "100%",
+            display: "flex",
+          }}
+        >
+          <div
+            style={{ width: "20%", height: "20px", backgroundColor: "red" }}
+          ></div>
+          <div
+            style={{ width: "60%", height: "20px", backgroundColor: "blue" }}
+          ></div>
+          <div
+            style={{ width: "30%", height: "20px", backgroundColor: "green" }}
+          ></div>
+        </div>
+      </div>
+    );
+    /*        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "40px",
+            marginLeft: "-50px",
+          }}
+        >
+          <div style={{ position: "absolute", marginTop: "-25px" }}>
+            <p
+              style={{
+                marginTop: "20px",
+                marginLeft: "-30px",
+              }}
+            >
+              id
+            </p>
+            <p style={{ marginTop: "-20px" }}>Username</p>
+            <p style={{ marginTop: "-20px", marginLeft: "250px" }}>Points</p>
+          </div>
+          {topUsers
+            ? topUsers.map((user, index) => (
+                <div
+                  key={index}
+                  style={{ position: "absolute", marginTop: "25px" }}
+                >
+                  <p
+                    style={{
+                      marginTop: index * 20 + "px",
+                      marginLeft: "-30px",
+                    }}
+                  >
+                    #{user.id}
+                  </p>
+                  <p style={{ marginTop: "-20px" }}>{user.username}</p>
+                  <p style={{ marginTop: "-20px", marginLeft: "250px" }}>
+                    {user.points}
+                  </p>
+                </div>
+              ))
+            : null}
+        </div>*/
   };
 
   const sidebarTabs = (title, active, id) => {
@@ -923,6 +997,7 @@ function Home() {
               )}
             </div>
             {mainStatistics()}
+            {mainTopUsers()}
           </>
         ) : null}
         {addMeal === "Breakfast"
