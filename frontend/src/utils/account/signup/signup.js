@@ -464,6 +464,7 @@ function Signup(props) {
             onClick={() => {
               props.showForm(false);
             }}
+            style={{ marginTop: "-50px", marginRight: "-400px" }}
           >
             <div className="close-btn-signup-line-one"></div>
             <div className="close-btn-signup-line-two"></div>
