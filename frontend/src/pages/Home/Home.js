@@ -83,7 +83,6 @@ function Home() {
       setPassword(response.data.user[0].password);
       setCalories(response.data.user[0].calories);
       setGoal(response.data.user[0].goal);
-      setPoints(response.data.user[0].points);
     });
   }, []);
 
@@ -189,20 +188,15 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (username !== null && password !== null) {
-      Axios.post("http://localhost:5000/updatePoints", {
+    if (username != null && password != null) {
+      Axios.post("http://localhost:5000/getPoints", {
         username: username,
         password: password,
-        points: points,
-      }).then((res) => {
-        console.log("updatePoints : ");
-        console.log(res);
-        if (points != res.data.points) {
-          setPoints(res.data.points);
-        }
+      }).then((response) => {
+        setPoints(response.data.points);
       });
     }
-  }, [points]);
+  }, [password]);
 
   const mainStatistics = () => {
     const nutritions = ["Carbs", "Protein", "Fats"];
