@@ -111,12 +111,13 @@ app.post("/SignUp", async (req, res) => {
     }
 
     db.query(
-      "INSERT INTO accounts (username, password, calories, goal) VALUES (?,?,?,?)",
+      "INSERT INTO accounts (username, password, calories, goal, points) VALUES (?,?,?,?,?)",
       [
         req.body.username,
         hashedPwd,
         calories,
         req.body.goal + ": " + goalCalories,
+        0,
       ],
       (err, result) => {
         if (err) {
@@ -204,6 +205,38 @@ app.post("/updatePoints", (req, res) => {
               res.send({ points: points, err: err, result: result });
             }
           );
+        } else {
+          res.send({ message: "Wrong username/password combination!" });
+        }
+      } else {
+        res.send({ message: "User does not exist!" });
+      }
+    }
+  );
+});
+
+app.post("/getPoints", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (username == null || password == null) {
+    res.send({ message: "Account info null..." });
+  }
+
+  db.query(
+    "SELECT * FROM accounts WHERE username = ?;",
+    username,
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+      if (result.length > 0) {
+        if (
+          result[0].username === username &&
+          result[0].password === password
+        ) {
+          points = result[0].points;
+          res.send({ points: points });
         } else {
           res.send({ message: "Wrong username/password combination!" });
         }
