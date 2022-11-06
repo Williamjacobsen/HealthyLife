@@ -615,13 +615,16 @@ function Home() {
                       if (meal === "Breakfast") {
                         setBreakfast((prev) => [...prev, data.name]);
                         setShowBreakfast(true);
-                        updatePoints(
-                          Math.round(
-                            (data.Energi /
-                              parseInt(calories.replace(",", ""))) *
-                              100
-                          ) + points
-                        );
+                        if (curCalories < parseInt(calories.replace(",", ""))) {
+                          // prvent user from getting points when they have gotton all they need
+                          updatePoints(
+                            Math.round(
+                              (data.Energi /
+                                parseInt(calories.replace(",", ""))) *
+                                100
+                            ) + points
+                          );
+                        }
                       } else if (meal === "Lunch") {
                         setLunch((prev) => [...prev, data.name]);
                         setShowLunch(true);
